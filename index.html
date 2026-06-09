@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laisa Math Coaching — Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --P:  #C85555; --Pd: #A83E3E; --Pl: #FDEAEA;
+  --A:  #EAA624; --Ad: #C88A1A; --Al: #FEF7E0;
+  --B:  #767B39; --Bd: #5A5F28; --Bl: #F0F2E0;
+  --V:  #AADCF2; --Vd: #5AACD4; --Vl: #EAF6FC;
+  --M:  #F7BCB0; --Md: #D06050; --Ml: #FEF3F0;
+  --paper: #FFFAF8; --cream: #FEF0E8; --border: #EDD8D0;
+  --ink: #3D1E1E; --muted: #8A6060;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Nunito',sans-serif;background:var(--paper);color:var(--ink);min-height:100vh;}
+
+/* ── Header ── */
+header{background:linear-gradient(135deg,var(--Pd) 0%,var(--P) 60%,#D96868 100%);padding:1.25rem 1.5rem 1rem;position:relative;overflow:hidden;}
+header::before{content:'';position:absolute;top:-20px;right:-20px;width:130px;height:130px;background:rgba(234,166,36,.2);border-radius:50%;}
+header::after{content:'';position:absolute;bottom:-30px;left:35%;width:90px;height:90px;background:rgba(247,188,176,.15);border-radius:50%;}
+.h-inner{display:flex;align-items:center;gap:1rem;position:relative;z-index:1;}
+.h-logo{width:54px;height:54px;border-radius:14px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;box-shadow:0 2px 10px rgba(0,0,0,.18);}
+.h-label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.75);font-weight:600;margin-bottom:2px;}
+header h1{font-size:clamp(17px,4vw,22px);font-weight:800;color:#fff;letter-spacing:-.01em;}
+header h1 em{color:var(--Al);font-style:normal;}
+header p{font-size:11.5px;color:rgba(255,255,255,.7);margin-top:3px;font-weight:500;}
+.h-dots{position:absolute;right:1rem;bottom:.75rem;display:flex;gap:5px;z-index:1;}
+.h-dots span{width:7px;height:7px;border-radius:50%;}
+.h-dots .d1{background:var(--A);}.h-dots .d2{background:rgba(255,255,255,.6);}.h-dots .d3{background:#EDE5D4;opacity:.7;}.h-dots .d4{background:#fff;opacity:.4;}
+
+/* ── Tab bar ── */
+.tab-bar{background:var(--Pd);display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.tab-bar::-webkit-scrollbar{display:none;}
+.tab-btn{flex:1;min-width:0;padding:10px 8px;font-size:10.5px;font-family:'Nunito',sans-serif;font-weight:700;letter-spacing:.03em;text-transform:uppercase;background:transparent;border:none;color:rgba(255,255,255,.55);cursor:pointer;transition:all .15s;white-space:nowrap;}
+.tab-btn.active{color:#fff;background:rgba(255,255,255,.12);border-bottom:3px solid var(--A);}
+
+main{max-width:780px;margin:0 auto;padding:1.5rem 1.25rem 5rem;}
+.page{display:none;}.page.active{display:block;}
+
+/* ── Sections ── */
+.section{background:#fff;border:1.5px solid var(--border);border-radius:16px;padding:1.4rem;margin-bottom:1.25rem;box-shadow:0 2px 8px rgba(61,30,30,.06);}
+.sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;padding-bottom:.75rem;border-bottom:1.5px solid var(--cream);}
+.sec-head-left{display:flex;align-items:center;gap:10px;}
+.sec-icon{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.si-red{background:var(--Pl);color:var(--Pd);}.si-apri{background:var(--Al);color:var(--Ad);}.si-green{background:var(--Bl);color:var(--Bd);}.si-blue{background:var(--Vl);color:var(--Vd);}
+.sec-title{font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);}
+
+/* ── Buttons ── */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border-radius:10px;border:none;cursor:pointer;font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;transition:all .15s;line-height:1;}
+.btn-primary{background:var(--P);color:#fff;}.btn-primary:hover{background:var(--Pd);}
+.btn-green{background:var(--B);color:#fff;border:1.5px solid var(--B);}.btn-green:hover{background:var(--Bd);}
+.btn-ghost{background:transparent;border:1.5px solid var(--border);color:var(--muted);}.btn-ghost:hover{background:var(--cream);}
+.btn-danger{background:var(--Ml);color:var(--Md);border:1.5px solid var(--Ml);}.btn-danger:hover{background:var(--P);color:#fff;border-color:var(--P);}
+.btn-sm{padding:6px 11px;font-size:12px;border-radius:8px;}
+
+/* ── Summary bar ── */
+.summary-bar{display:flex;gap:10px;margin-bottom:1.25rem;}
+.sum-box{flex:1;background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:12px;text-align:center;box-shadow:0 1px 4px rgba(61,30,30,.04);}
+.sum-num{font-size:22px;font-weight:800;}
+.sum-lbl{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-top:2px;}
+.sum-red .sum-num{color:var(--P);}.sum-apri .sum-num{color:var(--A);}.sum-green .sum-num{color:var(--B);}.sum-blue .sum-num{color:var(--Vd);}
+
+/* ── Student grid ── */
+.student-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;}
+.student-card{border:1.5px solid var(--border);border-radius:14px;padding:1rem;background:var(--paper);cursor:pointer;transition:all .15s;}
+.student-card:hover{border-color:var(--P);box-shadow:0 2px 14px rgba(200,85,85,.12);}
+.sc-top{display:flex;align-items:center;gap:12px;margin-bottom:.75rem;}
+.sc-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--Pl),var(--Ml));color:var(--P);font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.sc-name{font-size:15px;font-weight:800;}.sc-sub{font-size:11.5px;color:var(--muted);margin-top:2px;font-weight:500;}
+.sc-row{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);margin-bottom:4px;}
+.sc-row span{font-weight:600;color:var(--ink);}
+.cred-box{margin-top:.75rem;padding:.6rem .8rem;background:var(--Vl);border:1.5px solid var(--V);border-radius:10px;font-size:12px;color:#3A7A9A;font-weight:600;}
+
+/* ── Filters ── */
+.filter-bar{display:flex;gap:8px;margin-bottom:1rem;flex-wrap:wrap;}
+.filter-select{padding:7px 12px;border-radius:10px;border:1.5px solid var(--border);font-family:'Nunito',sans-serif;font-size:13px;font-weight:600;background:#fff;color:var(--ink);cursor:pointer;}
+.filter-select:focus{outline:none;border-color:var(--P);}
+
+/* ── Session items ── */
+.session-item{border:1.5px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:8px;}
+.si-head{display:flex;align-items:center;gap:10px;padding:11px 14px;cursor:pointer;background:var(--paper);transition:background .15s;user-select:none;}
+.si-head:hover{background:var(--Vl);}
+.si-date{font-size:13px;font-weight:700;}.si-student{font-size:12px;color:var(--muted);font-weight:600;margin-top:2px;}
+.si-arrow{font-size:12px;color:var(--muted);transition:transform .2s;flex-shrink:0;margin-left:auto;}
+.session-item.open .si-arrow{transform:rotate(180deg);}
+.si-body{display:none;padding:12px 14px;border-top:1.5px solid var(--cream);}
+.session-item.open .si-body{display:block;}
+.rfield{margin-bottom:10px;}.rfield:last-child{margin-bottom:0;}
+.rfield-label{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:3px;}
+.rfield-val{font-size:13px;line-height:1.6;white-space:pre-wrap;}
+.si-actions{display:flex;gap:6px;margin-top:10px;padding-top:10px;border-top:1.5px solid var(--cream);}
+.badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:6px;font-size:11px;font-weight:700;flex-shrink:0;}
+.badge-hadir{background:var(--Bl);color:var(--Bd);}.badge-absent{background:var(--Ml);color:var(--Md);}
+
+/* ── Monthly ── */
+.monthly-card{border:1.5px solid var(--border);border-radius:12px;padding:14px;margin-bottom:8px;background:var(--paper);}
+.mc-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.mc-title{font-size:15px;font-weight:800;}.mc-sub{font-size:12px;color:var(--muted);font-weight:600;}
+.mc-actions{display:flex;gap:6px;}
+.mc-body{font-size:13px;line-height:1.65;color:var(--ink);border-left:3px solid var(--P);padding-left:12px;margin:10px 0;white-space:pre-wrap;}
+.mc-next{font-size:12px;color:var(--Ad);padding:.6rem .8rem;background:var(--Al);border:1.5px solid #EFC87A;border-radius:8px;font-weight:500;white-space:pre-wrap;}
+
+/* ── Invoices ── */
+.inv-card{border:1.5px solid var(--border);border-radius:12px;padding:13px;margin-bottom:8px;background:var(--paper);}
+.inv-card.lunas{border-color:#9EC9A8;background:#F4FBF6;}
+.inv-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.inv-title{font-size:15px;font-weight:800;}.inv-sub{font-size:12px;color:var(--muted);font-weight:600;}
+.inv-amount{font-size:22px;font-weight:800;color:var(--P);}.inv-card.lunas .inv-amount{color:var(--B);}
+.inv-dates{font-size:11.5px;color:var(--muted);margin-top:6px;}
+.inv-actions{display:flex;gap:6px;margin-top:10px;}
+.status-badge{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;font-size:11px;font-weight:700;}
+.status-lunas{background:var(--Bl);color:var(--Bd);}.status-belum{background:var(--Ml);color:var(--Md);}
+
+/* ── Empty ── */
+.empty{text-align:center;padding:3rem 1rem;color:var(--muted);}
+.empty .ei{font-size:40px;margin-bottom:10px;}.empty p{font-size:13px;font-weight:600;}
+
+/* ── Modal ── */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:100;display:flex;align-items:flex-end;justify-content:center;}
+.overlay.hidden{display:none;}
+.modal{background:#fff;border-radius:22px 22px 0 0;padding:1.5rem 1.5rem 2rem;width:100%;max-width:540px;max-height:92vh;overflow-y:auto;box-shadow:0 -4px 24px rgba(0,0,0,.15);}
+.modal-title{font-size:17px;font-weight:800;margin-bottom:1.25rem;padding-bottom:.75rem;border-bottom:1.5px solid var(--cream);display:flex;align-items:center;justify-content:space-between;}
+.modal-close{background:none;border:none;font-size:20px;cursor:pointer;color:var(--muted);padding:2px 8px;border-radius:6px;}
+.modal-close:hover{background:var(--cream);}
+.modal-footer{display:flex;gap:8px;justify-content:flex-end;margin-top:1.25rem;padding-top:1rem;border-top:1.5px solid var(--cream);}
+
+/* ── Form ── */
+.form-group{margin-bottom:1rem;}
+.form-group label{display:block;font-size:11.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
+.form-input,.form-select,.form-textarea{width:100%;padding:10px 14px;border-radius:10px;border:1.5px solid var(--border);font-family:'Nunito',sans-serif;font-size:14px;font-weight:600;background:#fff;color:var(--ink);transition:border-color .15s;}
+.form-input:focus,.form-select:focus,.form-textarea:focus{outline:none;border-color:var(--P);box-shadow:0 0 0 3px rgba(200,85,85,.08);}
+.form-textarea{min-height:90px;resize:vertical;line-height:1.6;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.att-toggle{display:flex;gap:10px;}
+.att-opt{flex:1;}.att-opt input[type=radio]{display:none;}
+.att-label{display:block;text-align:center;padding:10px;border-radius:10px;border:1.5px solid var(--border);cursor:pointer;font-size:13px;font-weight:700;transition:all .15s;}
+.att-label:hover{background:var(--cream);}
+.att-opt input:checked + .att-hadir{background:var(--Bl);border-color:var(--B);color:var(--Bd);}
+.att-opt input:checked + .att-absent{background:var(--Ml);border-color:var(--Md);color:var(--Md);}
+
+@media(max-width:520px){
+  .student-grid{grid-template-columns:1fr;}
+  .form-row{grid-template-columns:1fr;}
+  .summary-bar{flex-wrap:wrap;}
+  .sum-box{min-width:calc(50% - 5px);}
+  .sum-num{font-size:18px;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="h-inner">
+    <div class="h-logo">📐</div>
+    <div>
+      <div class="h-label">Dashboard Tutor</div>
+      <h1>Laisa <em>Math</em> Coaching</h1>
+      <p>Kelola siswa, sesi, dan laporan dengan mudah ✨</p>
+    </div>
+  </div>
+  <div class="h-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span><span class="d4"></span></div>
+</header>
+
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="showPage('siswa')">👤 Siswa</button>
+  <button class="tab-btn"        onclick="showPage('sesi')">📋 Sesi</button>
+  <button class="tab-btn"        onclick="showPage('bulanan')">📊 Lap. Bulanan</button>
+  <button class="tab-btn"        onclick="showPage('tagihan')">💰 Tagihan</button>
+</div>
+
+<main>
+
+  <!-- ═══ SISWA ═══ -->
+  <div class="page active" id="page-siswa">
+    <div class="section">
+      <div class="sec-head">
+        <div class="sec-head-left">
+          <div class="sec-icon si-red">👤</div>
+          <div class="sec-title">Daftar Siswa</div>
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="openStudentModal()">+ Tambah Siswa</button>
+      </div>
+      <div id="student-list" class="student-grid"></div>
+    </div>
+  </div>
+
+  <!-- ═══ SESI ═══ -->
+  <div class="page" id="page-sesi">
+    <div class="summary-bar" id="session-summary"></div>
+    <div class="section">
+      <div class="sec-head">
+        <div class="sec-head-left">
+          <div class="sec-icon si-blue">📋</div>
+          <div class="sec-title">Catatan Sesi</div>
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="openSessionModal()">+ Tambah Sesi</button>
+      </div>
+      <div class="filter-bar">
+        <select class="filter-select" id="f-ses-student" onchange="renderSessions()">
+          <option value="">Semua Siswa</option>
+        </select>
+        <select class="filter-select" id="f-ses-month" onchange="renderSessions()">
+          <option value="">Semua Bulan</option>
+        </select>
+      </div>
+      <div id="session-list"></div>
+    </div>
+  </div>
+
+  <!-- ═══ LAPORAN BULANAN ═══ -->
+  <div class="page" id="page-bulanan">
+    <div class="section">
+      <div class="sec-head">
+        <div class="sec-head-left">
+          <div class="sec-icon si-green">📊</div>
+          <div class="sec-title">Laporan Bulanan</div>
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="openMonthlyModal()">+ Tambah Laporan</button>
+      </div>
+      <div class="filter-bar">
+        <select class="filter-select" id="f-mon-student" onchange="renderMonthly()">
+          <option value="">Semua Siswa</option>
+        </select>
+        <select class="filter-select" id="f-mon-month" onchange="renderMonthly()">
+          <option value="">Semua Bulan</option>
+        </select>
+      </div>
+      <div id="monthly-list"></div>
+    </div>
+  </div>
+
+  <!-- ═══ TAGIHAN ═══ -->
+  <div class="page" id="page-tagihan">
+    <div class="summary-bar" id="invoice-summary"></div>
+    <div class="section">
+      <div class="sec-head">
+        <div class="sec-head-left">
+          <div class="sec-icon si-apri">💰</div>
+          <div class="sec-title">Tagihan</div>
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="openInvoiceModal()">+ Tambah Tagihan</button>
+      </div>
+      <div class="filter-bar">
+        <select class="filter-select" id="f-inv-student" onchange="renderInvoices()">
+          <option value="">Semua Siswa</option>
+        </select>
+        <select class="filter-select" id="f-inv-status" onchange="renderInvoices()">
+          <option value="">Semua Status</option>
+          <option value="belum">Belum Lunas</option>
+          <option value="lunas">Lunas</option>
+        </select>
+      </div>
+      <div id="invoice-list"></div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ══ Modal: Siswa ══ -->
+<div class="overlay hidden" id="modal-student">
+  <div class="modal">
+    <div class="modal-title">
+      <span id="mst-title">Tambah Siswa</span>
+      <button class="modal-close" onclick="closeModal('modal-student')">✕</button>
+    </div>
+    <input type="hidden" id="mst-id">
+    <div class="form-row">
+      <div class="form-group"><label>Nama Lengkap *</label><input type="text" class="form-input" id="mst-name" placeholder="Nama siswa"></div>
+      <div class="form-group"><label>Kelas / Grade</label><input type="text" class="form-input" id="mst-grade" placeholder="mis. Kelas 7"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Sekolah</label><input type="text" class="form-input" id="mst-school" placeholder="Nama sekolah"></div>
+      <div class="form-group"><label>Tanggal Mulai</label><input type="date" class="form-input" id="mst-start"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Username Ortu</label><input type="text" class="form-input" id="mst-user" placeholder="mis. mama_alya"></div>
+      <div class="form-group"><label>PIN Ortu (4–6 digit)</label><input type="text" class="form-input" id="mst-pin" placeholder="mis. 1234" maxlength="6"></div>
+    </div>
+    <div class="form-group"><label>Catatan (opsional)</label><input type="text" class="form-input" id="mst-note" placeholder="mis. Fokus aljabar"></div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('modal-student')">Batal</button>
+      <button class="btn btn-primary" onclick="saveStudent()">Simpan</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Modal: Sesi ══ -->
+<div class="overlay hidden" id="modal-session">
+  <div class="modal">
+    <div class="modal-title">
+      <span id="mses-title">Tambah Sesi</span>
+      <button class="modal-close" onclick="closeModal('modal-session')">✕</button>
+    </div>
+    <input type="hidden" id="mses-id">
+    <div class="form-row">
+      <div class="form-group"><label>Siswa *</label><select class="form-select" id="mses-student"></select></div>
+      <div class="form-group"><label>Tanggal *</label><input type="date" class="form-input" id="mses-date"></div>
+    </div>
+    <div class="form-group">
+      <label>Kehadiran</label>
+      <div class="att-toggle">
+        <div class="att-opt"><input type="radio" name="att" id="att-h" value="hadir" checked><label for="att-h" class="att-label att-hadir">✅ Hadir</label></div>
+        <div class="att-opt"><input type="radio" name="att" id="att-a" value="absent"><label for="att-a" class="att-label att-absent">❌ Tidak Hadir</label></div>
+      </div>
+    </div>
+    <div class="form-group"><label>Materi yang Diajarkan</label><textarea class="form-textarea" id="mses-material" placeholder="Topik/materi yang dipelajari hari ini..." style="min-height:80px"></textarea></div>
+    <div class="form-group"><label>PR / Tugas</label><input type="text" class="form-input" id="mses-hw" placeholder="Tugas yang diberikan (kosongkan jika tidak ada)"></div>
+    <div class="form-group"><label>Catatan Harian</label><textarea class="form-textarea" id="mses-note" placeholder="Progress, kendala, atau hal yang perlu diperhatikan..." style="min-height:80px"></textarea></div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('modal-session')">Batal</button>
+      <button class="btn btn-primary" onclick="saveSession()">Simpan</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Modal: Laporan Bulanan ══ -->
+<div class="overlay hidden" id="modal-monthly">
+  <div class="modal">
+    <div class="modal-title">
+      <span id="mmon-title">Tambah Laporan Bulanan</span>
+      <button class="modal-close" onclick="closeModal('modal-monthly')">✕</button>
+    </div>
+    <input type="hidden" id="mmon-id">
+    <div class="form-row">
+      <div class="form-group"><label>Siswa *</label><select class="form-select" id="mmon-student"></select></div>
+      <div class="form-group"><label>Bulan & Tahun *</label><input type="month" class="form-input" id="mmon-my"></div>
+    </div>
+    <div class="form-group"><label>Narasi Progress Bulan Ini</label><textarea class="form-textarea" id="mmon-narasi" placeholder="Ceritakan perkembangan siswa secara umum bulan ini..." style="min-height:120px"></textarea></div>
+    <div class="form-group"><label>Catatan untuk Bulan Depan</label><textarea class="form-textarea" id="mmon-next" placeholder="Fokus atau hal yang perlu ditingkatkan bulan depan..." style="min-height:80px"></textarea></div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('modal-monthly')">Batal</button>
+      <button class="btn btn-primary" onclick="saveMonthly()">Simpan</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Modal: Tagihan ══ -->
+<div class="overlay hidden" id="modal-invoice">
+  <div class="modal">
+    <div class="modal-title">
+      <span id="minv-title">Tambah Tagihan</span>
+      <button class="modal-close" onclick="closeModal('modal-invoice')">✕</button>
+    </div>
+    <input type="hidden" id="minv-id">
+    <div class="form-row">
+      <div class="form-group"><label>Siswa *</label><select class="form-select" id="minv-student"></select></div>
+      <div class="form-group"><label>Bulan & Tahun *</label><input type="month" class="form-input" id="minv-my"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Jumlah (Rp)</label><input type="number" class="form-input" id="minv-amount" placeholder="0"></div>
+      <div class="form-group"><label>Jatuh Tempo</label><input type="date" class="form-input" id="minv-due"></div>
+    </div>
+    <div class="form-group">
+      <label>Status</label>
+      <select class="form-select" id="minv-status" onchange="togglePaidDate()">
+        <option value="belum">Belum Lunas</option>
+        <option value="lunas">Lunas</option>
+      </select>
+    </div>
+    <div class="form-group" id="minv-paid-group" style="display:none">
+      <label>Tanggal Bayar</label>
+      <input type="date" class="form-input" id="minv-paiddate">
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('modal-invoice')">Batal</button>
+      <button class="btn btn-primary" onclick="saveInvoice()">Simpan</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Global Spinner ══ -->
+<div id="global-spinner" style="display:none;position:fixed;inset:0;background:rgba(253,234,234,.85);z-index:9999;align-items:center;justify-content:center;flex-direction:column;gap:12px">
+  <div style="width:44px;height:44px;border:4px solid var(--border);border-top-color:var(--P);border-radius:50%;animation:spin .7s linear infinite"></div>
+  <div style="font-size:13px;font-weight:700;color:var(--P)">Memuat data…</div>
+</div>
+<style>@keyframes spin{to{transform:rotate(360deg)}}</style>
+
+<script>
+/* ════════════════════════════════════════════
+   CONFIG — isi API_URL setelah deploy GAS
+   ════════════════════════════════════════════ */
+const API_URL = 'https://script.google.com/macros/s/AKfycbw_25fb7Xe9ctkFY6bkFCEU3LhY1bbZlH77hvhVXOEifVOVyLVoBqe1Pk3CIwT8O--Zow/exec'; // ← Paste URL deployment GAS di sini
+
+/* ── Helpers ── */
+const MN=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+const esc=s=>(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const fmt=n=>(Number(n)||0).toLocaleString('id-ID');
+const ini=n=>(n||'?').split(' ').slice(0,2).map(w=>w[0]||'').join('').toUpperCase();
+const fmtMY=ym=>{if(!ym)return'—';const[y,m]=ym.split('-');return`${MN[parseInt(m)-1]} ${y}`};
+const fmtDS=d=>{if(!d)return'—';return new Date(d+'T00:00:00').toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'})};
+const genUser=n=>'ortu_'+(n||'siswa').toLowerCase().replace(/\s+/g,'').slice(0,8);
+const genPin=()=>String(Math.floor(1000+Math.random()*9000));
+const uid=()=>Math.random().toString(36).slice(2,9)+Date.now().toString(36).slice(-4);
+
+/* ── localStorage helpers (non-API mode) ── */
+const lsGet=k=>{try{return JSON.parse(localStorage.getItem(k)||'[]')}catch{return[]}};
+const lsSet=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
+
+/* ── State ── */
+let S={students:[],sessions:[],monthly:[],invoices:[]};
+const DB={s:()=>S.students,ses:()=>S.sessions,mon:()=>S.monthly,inv:()=>S.invoices};
+
+function syncLocal(){
+  lsSet('lm_s',   S.students);
+  lsSet('lm_ses', S.sessions);
+  lsSet('lm_mon', S.monthly);
+  lsSet('lm_inv', S.invoices);
+}
+
+/* ── Spinner ── */
+function showSpinner(){document.getElementById('global-spinner').style.display='flex';}
+function hideSpinner(){document.getElementById('global-spinner').style.display='none';}
+
+/* ── API helpers ── */
+async function apiFetch(action,params={}){
+  const url=new URL(API_URL);
+  url.searchParams.set('action',action);
+  Object.entries(params).forEach(([k,v])=>url.searchParams.set(k,v));
+  const res=await fetch(url.toString());
+  return res.json();
+}
+async function apiPost(action,data={}){
+  const res=await fetch(API_URL,{method:'POST',body:JSON.stringify({action,...data})});
+  return res.json();
+}
+
+/* ── Sample data (non-API mode only) ── */
+function initSample(){
+  S.students=[
+    {id:'s1',name:'Alya Putri Sari',grade:'Kelas 7',school:'SMPN 3',startDate:'2025-01-10',username:'ortu_alya',pin:'2841',note:'Fokus geometri & aljabar'},
+    {id:'s2',name:'Budi Santoso',   grade:'Kelas 9',school:'SMPN 1',startDate:'2025-02-05',username:'ortu_budi',pin:'5517',note:''},
+  ];
+  S.sessions=[
+    {id:'e1',studentId:'s1',date:'2025-06-05',present:true, material:'Persamaan linear satu variabel\n• Konsep variabel dan konstanta\n• Langkah penyelesaian PLSV',homework:'Kerjakan hal. 45 no. 1–10',note:'Alya mulai paham konsep dasar. Perlu latihan lebih banyak soal cerita.'},
+    {id:'e2',studentId:'s1',date:'2025-06-02',present:true, material:'Ulangan harian: Bilangan bulat dan pecahan',homework:'',note:'Nilai bagus! Perhatikan ketelitian pada soal pecahan campuran.'},
+    {id:'e3',studentId:'s2',date:'2025-06-04',present:false,material:'',homework:'',note:'Izin — sakit.'},
+    {id:'e4',studentId:'s2',date:'2025-06-01',present:true, material:'Teorema Pythagoras\n• Identifikasi segitiga siku-siku\n• Menghitung sisi yang tidak diketahui',homework:'Latihan soal hal. 78–79',note:'Budi sangat aktif bertanya. Perlu penguatan pada soal aplikasi.'},
+  ];
+  S.monthly=[
+    {id:'m1',studentId:'s1',monthYear:'2025-05',narrative:'Alya menunjukkan kemajuan yang konsisten sepanjang bulan Mei. Pemahaman terhadap operasi bilangan bulat semakin kuat, dan Alya mulai berani mengerjakan soal di papan tulis. Kehadiran penuh dan sangat antusias.',nextNotes:'Bulan Juni: masuk materi persamaan linear. Perbanyak latihan soal cerita.'},
+    {id:'m2',studentId:'s2',monthYear:'2025-05',narrative:'Budi cukup aktif dan selalu mengerjakan PR tepat waktu. Pemahaman teorema Pythagoras masih perlu penguatan, terutama pada soal kontekstual.',nextNotes:'Fokus pada soal cerita dan geometri bangun datar.'},
+  ];
+  S.invoices=[
+    {id:'i1',studentId:'s1',monthYear:'2025-06',amount:500000,status:'belum',dueDate:'2025-06-10',paidDate:''},
+    {id:'i2',studentId:'s1',monthYear:'2025-05',amount:500000,status:'lunas',dueDate:'2025-05-10',paidDate:'2025-05-08'},
+    {id:'i3',studentId:'s2',monthYear:'2025-06',amount:600000,status:'belum',dueDate:'2025-06-10',paidDate:''},
+    {id:'i4',studentId:'s2',monthYear:'2025-05',amount:600000,status:'lunas',dueDate:'2025-05-10',paidDate:'2025-05-07'},
+  ];
+  syncLocal();
+}
+
+/* ── Navigation ── */
+const PAGES=['siswa','sesi','bulanan','tagihan'];
+function showPage(name){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  document.querySelectorAll('.tab-btn')[PAGES.indexOf(name)].classList.add('active');
+  if(name==='sesi')   {fillStudentFilter('f-ses-student');fillMonthFilter();renderSessions();renderSessionSummary();}
+  if(name==='bulanan'){fillStudentFilter('f-mon-student');fillMonthlyFilter();renderMonthly();}
+  if(name==='tagihan'){fillStudentFilter('f-inv-student');renderInvoices();renderInvoiceSummary();}
+}
+
+/* ── Modals ── */
+function openModal(id){document.getElementById(id).classList.remove('hidden');document.body.style.overflow='hidden';}
+function closeModal(id){document.getElementById(id).classList.add('hidden');document.body.style.overflow='';}
+document.querySelectorAll('.overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)closeModal(o.id);}));
+
+function fillStudentDD(selId,val=''){
+  const sel=document.getElementById(selId);
+  sel.innerHTML='<option value="">-- Pilih Siswa --</option>'+
+    DB.s().map(s=>`<option value="${s.id}"${s.id===val?' selected':''}>${esc(s.name)}</option>`).join('');
+}
+function fillStudentFilter(selId){
+  const sel=document.getElementById(selId);if(!sel)return;
+  const cur=sel.value;
+  sel.innerHTML='<option value="">Semua Siswa</option>'+
+    DB.s().map(s=>`<option value="${s.id}"${s.id===cur?' selected':''}>${esc(s.name)}</option>`).join('');
+}
+function fillMonthFilter(){
+  const sel=document.getElementById('f-ses-month');if(!sel)return;
+  const cur=sel.value;
+  const months=[...new Set(DB.ses().map(s=>s.date.slice(0,7)))].sort().reverse();
+  sel.innerHTML='<option value="">Semua Bulan</option>'+
+    months.map(m=>`<option value="${m}"${m===cur?' selected':''}>${fmtMY(m)}</option>`).join('');
+}
+function fillMonthlyFilter(){
+  const sel=document.getElementById('f-mon-month');if(!sel)return;
+  const cur=sel.value;
+  const months=[...new Set(DB.mon().map(r=>r.monthYear))].sort().reverse();
+  sel.innerHTML='<option value="">Semua Bulan</option>'+
+    months.map(m=>`<option value="${m}"${m===cur?' selected':''}>${fmtMY(m)}</option>`).join('');
+}
+
+/* ════ STUDENTS ════ */
+function renderStudents(){
+  const list=document.getElementById('student-list');
+  const arr=DB.s();
+  if(!arr.length){list.innerHTML='<div class="empty"><div class="ei">🎓</div><p>Belum ada siswa terdaftar</p></div>';return;}
+  list.innerHTML=arr.map(s=>`
+    <div class="student-card" onclick="openStudentModal('${s.id}')">
+      <div class="sc-top">
+        <div class="sc-avatar">${ini(s.name)}</div>
+        <div><div class="sc-name">${esc(s.name)}</div><div class="sc-sub">${esc(s.grade||'—')} · ${esc(s.school||'—')}</div></div>
+      </div>
+      <div class="sc-row">📅 Mulai: <span>${fmtDS(s.startDate)}</span></div>
+      ${s.note?`<div class="sc-row">📌 <span>${esc(s.note)}</span></div>`:''}
+      <div class="cred-box">🔑 Username: <strong>${esc(s.username)}</strong> &nbsp;|&nbsp; PIN: <strong>${esc(s.pin)}</strong></div>
+    </div>`).join('');
+}
+
+function openStudentModal(id=''){
+  const s=id?DB.s().find(x=>x.id===id):null;
+  document.getElementById('mst-title').textContent=s?'Edit Siswa':'Tambah Siswa';
+  document.getElementById('mst-id').value    =s?.id       ||'';
+  document.getElementById('mst-name').value  =s?.name     ||'';
+  document.getElementById('mst-grade').value =s?.grade    ||'';
+  document.getElementById('mst-school').value=s?.school   ||'';
+  document.getElementById('mst-start').value =s?.startDate||'';
+  document.getElementById('mst-user').value  =s?.username ||'';
+  document.getElementById('mst-pin').value   =s?.pin      ||'';
+  document.getElementById('mst-note').value  =s?.note     ||'';
+  openModal('modal-student');
+}
+
+async function saveStudent(){
+  const name=document.getElementById('mst-name').value.trim();
+  if(!name){alert('Nama siswa wajib diisi!');return;}
+  const id=document.getElementById('mst-id').value;
+  const data={
+    id,name,
+    grade:    document.getElementById('mst-grade').value.trim(),
+    school:   document.getElementById('mst-school').value.trim(),
+    startDate:document.getElementById('mst-start').value,
+    username: document.getElementById('mst-user').value.trim()||genUser(name),
+    pin:      document.getElementById('mst-pin').value.trim()||genPin(),
+    note:     document.getElementById('mst-note').value.trim(),
+  };
+  if(API_URL){
+    showSpinner();
+    const res=await apiPost('save_student',data);
+    hideSpinner();
+    if(res.error){alert('Gagal menyimpan: '+res.error);return;}
+    data.id=res.id;
+  }
+  if(id){const i=S.students.findIndex(x=>x.id===id);if(i>=0)S.students[i]={...S.students[i],...data};}
+  else S.students.push({...data,id:data.id||uid()});
+  if(!API_URL)syncLocal();
+  closeModal('modal-student');
+  renderStudents();
+}
+
+/* ════ SESSIONS ════ */
+function renderSessionSummary(){
+  const arr=DB.ses();
+  const h=arr.filter(s=>s.present).length;
+  document.getElementById('session-summary').innerHTML=`
+    <div class="sum-box sum-blue"><div class="sum-num">${arr.length}</div><div class="sum-lbl">Total Sesi</div></div>
+    <div class="sum-box sum-green"><div class="sum-num">${h}</div><div class="sum-lbl">Hadir</div></div>
+    <div class="sum-box sum-red"><div class="sum-num">${arr.length-h}</div><div class="sum-lbl">Tidak Hadir</div></div>
+    <div class="sum-box sum-apri"><div class="sum-num">${DB.s().length}</div><div class="sum-lbl">Siswa Aktif</div></div>`;
+}
+
+function renderSessions(){
+  const fSt=document.getElementById('f-ses-student').value;
+  const fMo=document.getElementById('f-ses-month').value;
+  let arr=DB.ses();
+  if(fSt)arr=arr.filter(s=>s.studentId===fSt);
+  if(fMo)arr=arr.filter(s=>s.date.startsWith(fMo));
+  arr.sort((a,b)=>b.date.localeCompare(a.date));
+  const students=DB.s();
+  const list=document.getElementById('session-list');
+  if(!arr.length){list.innerHTML='<div class="empty"><div class="ei">📭</div><p>Belum ada catatan sesi</p></div>';return;}
+  list.innerHTML=arr.map(s=>{
+    const st=students.find(x=>x.id===s.studentId);
+    return`<div class="session-item" id="si-${s.id}">
+      <div class="si-head" onclick="toggleSI('${s.id}')">
+        <div style="flex:1">
+          <div style="display:flex;align-items:center;gap:8px">
+            <div class="si-date">${fmtDS(s.date)}</div>
+            <span class="badge badge-${s.present?'hadir':'absent'}">${s.present?'✅ Hadir':'❌ Tidak Hadir'}</span>
+          </div>
+          <div class="si-student">${esc(st?.name||'—')}</div>
+        </div>
+        <span class="si-arrow">▼</span>
+      </div>
+      <div class="si-body">
+        ${s.present?`
+          ${s.material?`<div class="rfield"><div class="rfield-label">📖 Materi</div><div class="rfield-val">${esc(s.material)}</div></div>`:''}
+          ${s.homework?`<div class="rfield"><div class="rfield-label">✏️ PR / Tugas</div><div class="rfield-val">${esc(s.homework)}</div></div>`:''}
+          ${s.note    ?`<div class="rfield"><div class="rfield-label">📝 Catatan</div><div class="rfield-val">${esc(s.note)}</div></div>`:''}
+        `:`
+          ${s.note?`<div class="rfield"><div class="rfield-label">📝 Keterangan</div><div class="rfield-val">${esc(s.note)}</div></div>`
+                  :'<div style="color:var(--muted);font-size:13px;padding:4px 0">Tidak hadir pada sesi ini.</div>'}
+        `}
+        <div class="si-actions">
+          <button class="btn btn-ghost btn-sm" onclick="openSessionModal('${s.id}')">✏️ Edit</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteSession('${s.id}')">🗑️ Hapus</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleSI(id){document.getElementById('si-'+id)?.classList.toggle('open');}
+
+function openSessionModal(id=''){
+  const s=id?DB.ses().find(x=>x.id===id):null;
+  document.getElementById('mses-title').textContent=s?'Edit Sesi':'Tambah Sesi';
+  document.getElementById('mses-id').value      =s?.id      ||'';
+  document.getElementById('mses-date').value    =s?.date    ||new Date().toISOString().slice(0,10);
+  document.getElementById('mses-material').value=s?.material||'';
+  document.getElementById('mses-hw').value      =s?.homework||'';
+  document.getElementById('mses-note').value    =s?.note    ||'';
+  document.getElementById('att-h').checked=!s||s.present;
+  document.getElementById('att-a').checked=!!(s&&!s.present);
+  fillStudentDD('mses-student',s?.studentId||'');
+  openModal('modal-session');
+}
+
+async function saveSession(){
+  const studentId=document.getElementById('mses-student').value;
+  const date=document.getElementById('mses-date').value;
+  if(!studentId||!date){alert('Pilih siswa dan tanggal!');return;}
+  const id=document.getElementById('mses-id').value;
+  const data={
+    id,studentId,date,
+    present:  document.getElementById('att-h').checked,
+    material: document.getElementById('mses-material').value.trim(),
+    homework: document.getElementById('mses-hw').value.trim(),
+    note:     document.getElementById('mses-note').value.trim(),
+  };
+  if(API_URL){
+    showSpinner();
+    const res=await apiPost('save_session',data);
+    hideSpinner();
+    if(res.error){alert('Gagal menyimpan: '+res.error);return;}
+    data.id=res.id;
+  }
+  if(id){const i=S.sessions.findIndex(x=>x.id===id);if(i>=0)S.sessions[i]={...S.sessions[i],...data};}
+  else S.sessions.push({...data,id:data.id||uid()});
+  if(!API_URL)syncLocal();
+  closeModal('modal-session');
+  fillMonthFilter();
+  renderSessions();
+  renderSessionSummary();
+}
+
+async function deleteSession(id){
+  if(!confirm('Hapus catatan sesi ini?'))return;
+  if(API_URL){showSpinner();await apiPost('delete_session',{id});hideSpinner();}
+  S.sessions=S.sessions.filter(s=>s.id!==id);
+  if(!API_URL)syncLocal();
+  renderSessions();renderSessionSummary();
+}
+
+/* ════ MONTHLY ════ */
+function renderMonthly(){
+  const fSt=document.getElementById('f-mon-student').value;
+  const fMo=document.getElementById('f-mon-month').value;
+  let arr=DB.mon();
+  if(fSt)arr=arr.filter(r=>r.studentId===fSt);
+  if(fMo)arr=arr.filter(r=>r.monthYear===fMo);
+  arr.sort((a,b)=>b.monthYear.localeCompare(a.monthYear));
+  const students=DB.s();
+  const list=document.getElementById('monthly-list');
+  if(!arr.length){list.innerHTML='<div class="empty"><div class="ei">📭</div><p>Belum ada laporan bulanan</p></div>';return;}
+  list.innerHTML=arr.map(r=>{
+    const st=students.find(s=>s.id===r.studentId);
+    return`<div class="monthly-card">
+      <div class="mc-head">
+        <div><div class="mc-title">${fmtMY(r.monthYear)}</div><div class="mc-sub">${esc(st?.name||'—')}</div></div>
+        <div class="mc-actions">
+          <button class="btn btn-ghost btn-sm" onclick="openMonthlyModal('${r.id}')">✏️ Edit</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteMonthly('${r.id}')">🗑️</button>
+        </div>
+      </div>
+      ${r.narrative?`<div class="mc-body">${esc(r.narrative)}</div>`:''}
+      ${r.nextNotes?`<div class="mc-next">📌 Catatan Bulan Depan: ${esc(r.nextNotes)}</div>`:''}
+    </div>`;
+  }).join('');
+}
+
+function openMonthlyModal(id=''){
+  const r=id?DB.mon().find(x=>x.id===id):null;
+  const now=new Date();
+  document.getElementById('mmon-title').textContent=r?'Edit Laporan Bulanan':'Tambah Laporan Bulanan';
+  document.getElementById('mmon-id').value    =r?.id       ||'';
+  document.getElementById('mmon-my').value    =r?.monthYear||`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;
+  document.getElementById('mmon-narasi').value=r?.narrative||'';
+  document.getElementById('mmon-next').value  =r?.nextNotes||'';
+  fillStudentDD('mmon-student',r?.studentId||'');
+  openModal('modal-monthly');
+}
+
+async function saveMonthly(){
+  const studentId=document.getElementById('mmon-student').value;
+  const monthYear=document.getElementById('mmon-my').value;
+  if(!studentId||!monthYear){alert('Pilih siswa dan bulan!');return;}
+  const id=document.getElementById('mmon-id').value;
+  const data={
+    id,studentId,monthYear,
+    narrative:document.getElementById('mmon-narasi').value.trim(),
+    nextNotes:document.getElementById('mmon-next').value.trim(),
+  };
+  if(API_URL){
+    showSpinner();
+    const res=await apiPost('save_monthly',data);
+    hideSpinner();
+    if(res.error){alert('Gagal menyimpan: '+res.error);return;}
+    data.id=res.id;
+  }
+  if(id){const i=S.monthly.findIndex(x=>x.id===id);if(i>=0)S.monthly[i]={...S.monthly[i],...data};}
+  else S.monthly.push({...data,id:data.id||uid()});
+  if(!API_URL)syncLocal();
+  closeModal('modal-monthly');
+  fillMonthlyFilter();
+  renderMonthly();
+}
+
+async function deleteMonthly(id){
+  if(!confirm('Hapus laporan bulanan ini?'))return;
+  if(API_URL){showSpinner();await apiPost('delete_monthly',{id});hideSpinner();}
+  S.monthly=S.monthly.filter(r=>r.id!==id);
+  if(!API_URL)syncLocal();
+  renderMonthly();
+}
+
+/* ════ INVOICES ════ */
+function renderInvoiceSummary(){
+  const arr=DB.inv();
+  const l=arr.filter(i=>i.status==='lunas').length;
+  const tunggakan=arr.filter(i=>i.status!=='lunas').reduce((s,i)=>s+Number(i.amount||0),0);
+  document.getElementById('invoice-summary').innerHTML=`
+    <div class="sum-box sum-apri"><div class="sum-num">${arr.length}</div><div class="sum-lbl">Total Tagihan</div></div>
+    <div class="sum-box sum-green"><div class="sum-num">${l}</div><div class="sum-lbl">Lunas</div></div>
+    <div class="sum-box sum-red"><div class="sum-num">${arr.length-l}</div><div class="sum-lbl">Belum Lunas</div></div>
+    <div class="sum-box sum-blue"><div class="sum-num" style="font-size:15px">Rp ${fmt(tunggakan)}</div><div class="sum-lbl">Tunggakan</div></div>`;
+}
+
+function renderInvoices(){
+  const fSt=document.getElementById('f-inv-student').value;
+  const fSta=document.getElementById('f-inv-status').value;
+  let arr=DB.inv();
+  if(fSt) arr=arr.filter(i=>i.studentId===fSt);
+  if(fSta)arr=arr.filter(i=>fSta==='lunas'?i.status==='lunas':i.status!=='lunas');
+  arr.sort((a,b)=>b.monthYear.localeCompare(a.monthYear));
+  const students=DB.s();
+  const list=document.getElementById('invoice-list');
+  if(!arr.length){list.innerHTML='<div class="empty"><div class="ei">📭</div><p>Belum ada tagihan</p></div>';return;}
+  list.innerHTML=arr.map(inv=>{
+    const st=students.find(s=>s.id===inv.studentId);
+    const paid=inv.status==='lunas';
+    return`<div class="inv-card${paid?' lunas':''}">
+      <div class="inv-top">
+        <div><div class="inv-title">${fmtMY(inv.monthYear)}</div><div class="inv-sub">${esc(st?.name||'—')}</div></div>
+        <span class="status-badge status-${paid?'lunas':'belum'}">${paid?'✅ Lunas':'⏳ Belum Lunas'}</span>
+      </div>
+      <div class="inv-amount">Rp ${fmt(inv.amount)}</div>
+      <div class="inv-dates">Jatuh Tempo: ${fmtDS(inv.dueDate)}${inv.paidDate?' &nbsp;·&nbsp; Dibayar: '+fmtDS(inv.paidDate):''}</div>
+      <div class="inv-actions">
+        ${!paid?`<button class="btn btn-green btn-sm" onclick="markPaid('${inv.id}')">✅ Tandai Lunas</button>`
+               :`<button class="btn btn-ghost btn-sm" onclick="markUnpaid('${inv.id}')">↩️ Batalkan</button>`}
+        <button class="btn btn-ghost btn-sm" onclick="openInvoiceModal('${inv.id}')">✏️ Edit</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteInvoice('${inv.id}')">🗑️</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function togglePaidDate(){document.getElementById('minv-paid-group').style.display=document.getElementById('minv-status').value==='lunas'?'block':'none';}
+
+function openInvoiceModal(id=''){
+  const inv=id?DB.inv().find(x=>x.id===id):null;
+  const now=new Date();
+  document.getElementById('minv-title').textContent=inv?'Edit Tagihan':'Tambah Tagihan';
+  document.getElementById('minv-id').value      =inv?.id        ||'';
+  document.getElementById('minv-my').value      =inv?.monthYear ||`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;
+  document.getElementById('minv-amount').value  =inv?.amount    ||'';
+  document.getElementById('minv-due').value     =inv?.dueDate   ||'';
+  document.getElementById('minv-status').value  =inv?.status    ||'belum';
+  document.getElementById('minv-paiddate').value =inv?.paidDate ||'';
+  document.getElementById('minv-paid-group').style.display=inv?.status==='lunas'?'block':'none';
+  fillStudentDD('minv-student',inv?.studentId||'');
+  openModal('modal-invoice');
+}
+
+async function saveInvoice(){
+  const studentId=document.getElementById('minv-student').value;
+  const monthYear=document.getElementById('minv-my').value;
+  if(!studentId||!monthYear){alert('Pilih siswa dan bulan!');return;}
+  const id=document.getElementById('minv-id').value;
+  const status=document.getElementById('minv-status').value;
+  const data={
+    id,studentId,monthYear,
+    amount:  document.getElementById('minv-amount').value,
+    dueDate: document.getElementById('minv-due').value,
+    status,
+    paidDate:status==='lunas'?document.getElementById('minv-paiddate').value:'',
+  };
+  if(API_URL){
+    showSpinner();
+    const res=await apiPost('save_invoice',data);
+    hideSpinner();
+    if(res.error){alert('Gagal menyimpan: '+res.error);return;}
+    data.id=res.id;
+  }
+  if(id){const i=S.invoices.findIndex(x=>x.id===id);if(i>=0)S.invoices[i]={...S.invoices[i],...data};}
+  else S.invoices.push({...data,id:data.id||uid()});
+  if(!API_URL)syncLocal();
+  closeModal('modal-invoice');
+  renderInvoices();renderInvoiceSummary();
+}
+
+async function markPaid(id){
+  const i=S.invoices.findIndex(x=>x.id===id);if(i<0)return;
+  const data={...S.invoices[i],status:'lunas',paidDate:new Date().toISOString().slice(0,10)};
+  if(API_URL){showSpinner();await apiPost('save_invoice',data);hideSpinner();}
+  S.invoices[i]=data;
+  if(!API_URL)syncLocal();
+  renderInvoices();renderInvoiceSummary();
+}
+
+async function markUnpaid(id){
+  const i=S.invoices.findIndex(x=>x.id===id);if(i<0)return;
+  const data={...S.invoices[i],status:'belum',paidDate:''};
+  if(API_URL){showSpinner();await apiPost('save_invoice',data);hideSpinner();}
+  S.invoices[i]=data;
+  if(!API_URL)syncLocal();
+  renderInvoices();renderInvoiceSummary();
+}
+
+async function deleteInvoice(id){
+  if(!confirm('Hapus tagihan ini?'))return;
+  if(API_URL){showSpinner();await apiPost('delete_invoice',{id});hideSpinner();}
+  S.invoices=S.invoices.filter(i=>i.id!==id);
+  if(!API_URL)syncLocal();
+  renderInvoices();renderInvoiceSummary();
+}
+
+/* ── Init ── */
+(async function(){
+  if(API_URL){
+    showSpinner();
+    try{
+      const d=await apiFetch('get_admin');
+      S={students:d.students||[],sessions:d.sessions||[],monthly:d.monthly||[],invoices:d.invoices||[]};
+    }catch(e){alert('Gagal memuat data: '+e.message);}
+    hideSpinner();
+  } else {
+    S={students:lsGet('lm_s'),sessions:lsGet('lm_ses'),monthly:lsGet('lm_mon'),invoices:lsGet('lm_inv')};
+    if(!S.students.length)initSample();
+  }
+  renderStudents();
+})();
+</script>
+</body>
+</html>
