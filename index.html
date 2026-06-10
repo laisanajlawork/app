@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Laisa Math Coaching — Admin</title>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
   --P:  #C85555; --Pd: #A83E3E; --Pl: #FDEAEA;
@@ -16,7 +16,7 @@
   --ink: #3D1E1E; --muted: #8A6060;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Nunito',sans-serif;background:var(--paper);color:var(--ink);min-height:100vh;}
+body{font-family:'Poppins',sans-serif;background:var(--paper);color:var(--ink);min-height:100vh;}
 
 /* ── Header ── */
 header{background:linear-gradient(135deg,var(--Pd) 0%,var(--P) 60%,#D96868 100%);padding:1.25rem 1.5rem 1rem;position:relative;overflow:hidden;}
@@ -35,7 +35,7 @@ header p{font-size:11.5px;color:rgba(255,255,255,.7);margin-top:3px;font-weight:
 /* ── Tab bar ── */
 .tab-bar{background:var(--Pd);display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;}
 .tab-bar::-webkit-scrollbar{display:none;}
-.tab-btn{flex:1;min-width:0;padding:10px 8px;font-size:10.5px;font-family:'Nunito',sans-serif;font-weight:700;letter-spacing:.03em;text-transform:uppercase;background:transparent;border:none;color:rgba(255,255,255,.55);cursor:pointer;transition:all .15s;white-space:nowrap;}
+.tab-btn{flex:1;min-width:0;padding:10px 8px;font-size:10.5px;font-family:'Poppins',sans-serif;font-weight:700;letter-spacing:.03em;text-transform:uppercase;background:transparent;border:none;color:rgba(255,255,255,.55);cursor:pointer;transition:all .15s;white-space:nowrap;}
 .tab-btn.active{color:#fff;background:rgba(255,255,255,.12);border-bottom:3px solid var(--A);}
 
 main{max-width:780px;margin:0 auto;padding:1.5rem 1.25rem 5rem;}
@@ -50,7 +50,7 @@ main{max-width:780px;margin:0 auto;padding:1.5rem 1.25rem 5rem;}
 .sec-title{font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);}
 
 /* ── Buttons ── */
-.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border-radius:10px;border:none;cursor:pointer;font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;transition:all .15s;line-height:1;}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border-radius:10px;border:none;cursor:pointer;font-family:'Poppins',sans-serif;font-size:13px;font-weight:700;transition:all .15s;line-height:1;}
 .btn-primary{background:var(--P);color:#fff;}.btn-primary:hover{background:var(--Pd);}
 .btn-green{background:var(--B);color:#fff;border:1.5px solid var(--B);}.btn-green:hover{background:var(--Bd);}
 .btn-ghost{background:transparent;border:1.5px solid var(--border);color:var(--muted);}.btn-ghost:hover{background:var(--cream);}
@@ -74,10 +74,11 @@ main{max-width:780px;margin:0 auto;padding:1.5rem 1.25rem 5rem;}
 .sc-row{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);margin-bottom:4px;}
 .sc-row span{font-weight:600;color:var(--ink);}
 .cred-box{margin-top:.75rem;padding:.6rem .8rem;background:var(--Vl);border:1.5px solid var(--V);border-radius:10px;font-size:12px;color:#3A7A9A;font-weight:600;}
+.prog-badge{display:inline-block;padding:2px 9px;border-radius:6px;font-size:10.5px;font-weight:700;margin-bottom:.5rem;}
 
 /* ── Filters ── */
 .filter-bar{display:flex;gap:8px;margin-bottom:1rem;flex-wrap:wrap;}
-.filter-select{padding:7px 12px;border-radius:10px;border:1.5px solid var(--border);font-family:'Nunito',sans-serif;font-size:13px;font-weight:600;background:#fff;color:var(--ink);cursor:pointer;}
+.filter-select{padding:7px 12px;border-radius:10px;border:1.5px solid var(--border);font-family:'Poppins',sans-serif;font-size:13px;font-weight:600;background:#fff;color:var(--ink);cursor:pointer;}
 .filter-select:focus{outline:none;border-color:var(--P);}
 
 /* ── Session items ── */
@@ -95,6 +96,8 @@ main{max-width:780px;margin:0 auto;padding:1.5rem 1.25rem 5rem;}
 .si-actions{display:flex;gap:6px;margin-top:10px;padding-top:10px;border-top:1.5px solid var(--cream);}
 .badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:6px;font-size:11px;font-weight:700;flex-shrink:0;}
 .badge-hadir{background:var(--Bl);color:var(--Bd);}.badge-absent{background:var(--Ml);color:var(--Md);}
+.doc-thumbs{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;}
+.doc-thumbs img{width:76px;height:76px;object-fit:cover;border-radius:8px;border:1.5px solid var(--border);cursor:pointer;}
 
 /* ── Monthly ── */
 .monthly-card{border:1.5px solid var(--border);border-radius:12px;padding:14px;margin-bottom:8px;background:var(--paper);}
@@ -114,6 +117,9 @@ main{max-width:780px;margin:0 auto;padding:1.5rem 1.25rem 5rem;}
 .inv-actions{display:flex;gap:6px;margin-top:10px;}
 .status-badge{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;font-size:11px;font-weight:700;}
 .status-lunas{background:var(--Bl);color:var(--Bd);}.status-belum{background:var(--Ml);color:var(--Md);}
+.method-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:6px;font-size:10.5px;font-weight:700;margin-top:5px;}
+.method-transfer{background:var(--Vl);color:var(--Vd);}.method-cash{background:var(--Bl);color:var(--Bd);}
+.bni-box{background:var(--Vl);border:1.5px solid var(--V);border-radius:10px;padding:10px 13px;font-size:12.5px;font-weight:600;color:#3A7A9A;margin-top:8px;line-height:1.6;}
 
 /* ── Empty ── */
 .empty{text-align:center;padding:3rem 1rem;color:var(--muted);}
@@ -131,16 +137,15 @@ main{max-width:780px;margin:0 auto;padding:1.5rem 1.25rem 5rem;}
 /* ── Form ── */
 .form-group{margin-bottom:1rem;}
 .form-group label{display:block;font-size:11.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
-.form-input,.form-select,.form-textarea{width:100%;padding:10px 14px;border-radius:10px;border:1.5px solid var(--border);font-family:'Nunito',sans-serif;font-size:14px;font-weight:600;background:#fff;color:var(--ink);transition:border-color .15s;}
+.form-input,.form-select,.form-textarea{width:100%;padding:10px 14px;border-radius:10px;border:1.5px solid var(--border);font-family:'Poppins',sans-serif;font-size:14px;font-weight:600;background:#fff;color:var(--ink);transition:border-color .15s;}
 .form-input:focus,.form-select:focus,.form-textarea:focus{outline:none;border-color:var(--P);box-shadow:0 0 0 3px rgba(200,85,85,.08);}
 .form-textarea{min-height:90px;resize:vertical;line-height:1.6;}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-.att-toggle{display:flex;gap:10px;}
-.att-opt{flex:1;}.att-opt input[type=radio]{display:none;}
-.att-label{display:block;text-align:center;padding:10px;border-radius:10px;border:1.5px solid var(--border);cursor:pointer;font-size:13px;font-weight:700;transition:all .15s;}
-.att-label:hover{background:var(--cream);}
-.att-opt input:checked + .att-hadir{background:var(--Bl);border-color:var(--B);color:var(--Bd);}
-.att-opt input:checked + .att-absent{background:var(--Ml);border-color:var(--Md);color:var(--Md);}
+.form-file{width:100%;padding:8px 12px;border-radius:10px;border:1.5px dashed var(--border);font-family:'Poppins',sans-serif;font-size:13px;font-weight:500;background:var(--paper);color:var(--muted);cursor:pointer;}
+.doc-preview{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;}
+.doc-prev-item{position:relative;display:inline-block;}
+.doc-prev-item img{width:70px;height:70px;object-fit:cover;border-radius:8px;border:1.5px solid var(--border);}
+.doc-prev-rm{position:absolute;top:-5px;right:-5px;width:18px;height:18px;border-radius:50%;background:var(--P);color:#fff;border:none;cursor:pointer;font-size:10px;line-height:18px;text-align:center;padding:0;}
 
 @media(max-width:520px){
   .student-grid{grid-template-columns:1fr;}
@@ -167,8 +172,8 @@ main{max-width:780px;margin:0 auto;padding:1.5rem 1.25rem 5rem;}
 
 <div class="tab-bar">
   <button class="tab-btn active" onclick="showPage('siswa')">👤 Siswa</button>
-  <button class="tab-btn"        onclick="showPage('sesi')">📋 Sesi</button>
-  <button class="tab-btn"        onclick="showPage('bulanan')">📊 Lap. Bulanan</button>
+  <button class="tab-btn"        onclick="showPage('jurnal')">📋 Jurnal</button>
+  <button class="tab-btn"        onclick="showPage('progress')">📊 Progress</button>
   <button class="tab-btn"        onclick="showPage('tagihan')">💰 Tagihan</button>
 </div>
 
@@ -188,14 +193,14 @@ main{max-width:780px;margin:0 auto;padding:1.5rem 1.25rem 5rem;}
     </div>
   </div>
 
-  <!-- ═══ SESI ═══ -->
-  <div class="page" id="page-sesi">
+  <!-- ═══ JURNAL ═══ -->
+  <div class="page" id="page-jurnal">
     <div class="summary-bar" id="session-summary"></div>
     <div class="section">
       <div class="sec-head">
         <div class="sec-head-left">
           <div class="sec-icon si-blue">📋</div>
-          <div class="sec-title">Catatan Sesi</div>
+          <div class="sec-title">Jurnal Sesi</div>
         </div>
         <button class="btn btn-primary btn-sm" onclick="openSessionModal()">+ Tambah Sesi</button>
       </div>
@@ -211,15 +216,15 @@ main{max-width:780px;margin:0 auto;padding:1.5rem 1.25rem 5rem;}
     </div>
   </div>
 
-  <!-- ═══ LAPORAN BULANAN ═══ -->
-  <div class="page" id="page-bulanan">
+  <!-- ═══ PROGRESS ═══ -->
+  <div class="page" id="page-progress">
     <div class="section">
       <div class="sec-head">
         <div class="sec-head-left">
           <div class="sec-icon si-green">📊</div>
-          <div class="sec-title">Laporan Bulanan</div>
+          <div class="sec-title">Progress Bulanan</div>
         </div>
-        <button class="btn btn-primary btn-sm" onclick="openMonthlyModal()">+ Tambah Laporan</button>
+        <button class="btn btn-primary btn-sm" onclick="openMonthlyModal()">+ Tambah Progress</button>
       </div>
       <div class="filter-bar">
         <select class="filter-select" id="f-mon-student" onchange="renderMonthly()">
@@ -268,19 +273,29 @@ main{max-width:780px;margin:0 auto;padding:1.5rem 1.25rem 5rem;}
       <button class="modal-close" onclick="closeModal('modal-student')">✕</button>
     </div>
     <input type="hidden" id="mst-id">
-    <div class="form-row">
-      <div class="form-group"><label>Nama Lengkap *</label><input type="text" class="form-input" id="mst-name" placeholder="Nama siswa"></div>
-      <div class="form-group"><label>Kelas / Grade</label><input type="text" class="form-input" id="mst-grade" placeholder="mis. Kelas 7"></div>
+    <div class="form-group"><label>Nama Lengkap *</label><input type="text" class="form-input" id="mst-name" placeholder="Nama siswa"></div>
+    <div class="form-group">
+      <label>Program *</label>
+      <select class="form-select" id="mst-program">
+        <option value="">-- Pilih Program --</option>
+        <option value="Calistung">Calistung</option>
+        <option value="Matematika SD">Matematika SD</option>
+        <option value="Matematika SMP">Matematika SMP</option>
+        <option value="Matematika SMA">Matematika SMA</option>
+      </select>
     </div>
     <div class="form-row">
+      <div class="form-group"><label>Kelas / Grade</label><input type="text" class="form-input" id="mst-grade" placeholder="mis. Kelas 7"></div>
       <div class="form-group"><label>Sekolah</label><input type="text" class="form-input" id="mst-school" placeholder="Nama sekolah"></div>
+    </div>
+    <div class="form-row">
       <div class="form-group"><label>Tanggal Mulai</label><input type="date" class="form-input" id="mst-start"></div>
+      <div class="form-group"><label>Catatan</label><input type="text" class="form-input" id="mst-note" placeholder="mis. Fokus aljabar"></div>
     </div>
     <div class="form-row">
       <div class="form-group"><label>Username Ortu</label><input type="text" class="form-input" id="mst-user" placeholder="mis. mama_alya"></div>
       <div class="form-group"><label>PIN Ortu (4–6 digit)</label><input type="text" class="form-input" id="mst-pin" placeholder="mis. 1234" maxlength="6"></div>
     </div>
-    <div class="form-group"><label>Catatan (opsional)</label><input type="text" class="form-input" id="mst-note" placeholder="mis. Fokus aljabar"></div>
     <div class="modal-footer">
       <button class="btn btn-ghost" onclick="closeModal('modal-student')">Batal</button>
       <button class="btn btn-primary" onclick="saveStudent()">Simpan</button>
@@ -288,11 +303,11 @@ main{max-width:780px;margin:0 auto;padding:1.5rem 1.25rem 5rem;}
   </div>
 </div>
 
-<!-- ══ Modal: Sesi ══ -->
+<!-- ══ Modal: Jurnal/Sesi ══ -->
 <div class="overlay hidden" id="modal-session">
   <div class="modal">
     <div class="modal-title">
-      <span id="mses-title">Tambah Sesi</span>
+      <span id="mses-title">Tambah Jurnal</span>
       <button class="modal-close" onclick="closeModal('modal-session')">✕</button>
     </div>
     <input type="hidden" id="mses-id">
@@ -301,15 +316,24 @@ main{max-width:780px;margin:0 auto;padding:1.5rem 1.25rem 5rem;}
       <div class="form-group"><label>Tanggal *</label><input type="date" class="form-input" id="mses-date"></div>
     </div>
     <div class="form-group">
-      <label>Kehadiran</label>
-      <div class="att-toggle">
-        <div class="att-opt"><input type="radio" name="att" id="att-h" value="hadir" checked><label for="att-h" class="att-label att-hadir">✅ Hadir</label></div>
-        <div class="att-opt"><input type="radio" name="att" id="att-a" value="absent"><label for="att-a" class="att-label att-absent">❌ Tidak Hadir</label></div>
-      </div>
+      <label>Status Kehadiran</label>
+      <select class="form-select" id="mses-status">
+        <option value="hadir">✅ Hadir</option>
+        <option value="tidak">❌ Tidak Hadir</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Jam Mulai</label><input type="time" class="form-input" id="mses-start"></div>
+      <div class="form-group"><label>Jam Selesai</label><input type="time" class="form-input" id="mses-end"></div>
     </div>
     <div class="form-group"><label>Materi yang Diajarkan</label><textarea class="form-textarea" id="mses-material" placeholder="Topik/materi yang dipelajari hari ini..." style="min-height:80px"></textarea></div>
     <div class="form-group"><label>PR / Tugas</label><input type="text" class="form-input" id="mses-hw" placeholder="Tugas yang diberikan (kosongkan jika tidak ada)"></div>
     <div class="form-group"><label>Catatan Harian</label><textarea class="form-textarea" id="mses-note" placeholder="Progress, kendala, atau hal yang perlu diperhatikan..." style="min-height:80px"></textarea></div>
+    <div class="form-group">
+      <label>Dokumentasi (maks. 3 foto)</label>
+      <input type="file" class="form-file" id="mses-docs" accept="image/*" multiple onchange="previewDocs()">
+      <div class="doc-preview" id="mses-doc-preview"></div>
+    </div>
     <div class="modal-footer">
       <button class="btn btn-ghost" onclick="closeModal('modal-session')">Batal</button>
       <button class="btn btn-primary" onclick="saveSession()">Simpan</button>
@@ -317,11 +341,11 @@ main{max-width:780px;margin:0 auto;padding:1.5rem 1.25rem 5rem;}
   </div>
 </div>
 
-<!-- ══ Modal: Laporan Bulanan ══ -->
+<!-- ══ Modal: Progress Bulanan ══ -->
 <div class="overlay hidden" id="modal-monthly">
   <div class="modal">
     <div class="modal-title">
-      <span id="mmon-title">Tambah Laporan Bulanan</span>
+      <span id="mmon-title">Tambah Progress</span>
       <button class="modal-close" onclick="closeModal('modal-monthly')">✕</button>
     </div>
     <input type="hidden" id="mmon-id">
@@ -355,6 +379,19 @@ main{max-width:780px;margin:0 auto;padding:1.5rem 1.25rem 5rem;}
       <div class="form-group"><label>Jatuh Tempo</label><input type="date" class="form-input" id="minv-due"></div>
     </div>
     <div class="form-group">
+      <label>Metode Pembayaran</label>
+      <select class="form-select" id="minv-method" onchange="togglePaymentInfo()">
+        <option value="">-- Belum dipilih --</option>
+        <option value="cash">💵 Cash / Tunai</option>
+        <option value="transfer">🏦 Transfer Bank</option>
+      </select>
+    </div>
+    <div id="minv-bni-info" style="display:none;padding:10px 14px;background:var(--Vl);border:1.5px solid var(--V);border-radius:10px;font-size:13px;font-weight:600;color:#3A7A9A;margin-bottom:1rem;line-height:1.7">
+      🏦 Transfer ke <strong>BNI</strong><br>
+      No. Rek: <strong>0673690383</strong><br>
+      a.n. <strong>Najlarafah Is Laisa</strong>
+    </div>
+    <div class="form-group">
       <label>Status</label>
       <select class="form-select" id="minv-status" onchange="togglePaidDate()">
         <option value="belum">Belum Lunas</option>
@@ -383,7 +420,7 @@ main{max-width:780px;margin:0 auto;padding:1.5rem 1.25rem 5rem;}
 /* ════════════════════════════════════════════
    CONFIG — isi API_URL setelah deploy GAS
    ════════════════════════════════════════════ */
-const API_URL = 'https://script.google.com/macros/s/AKfycbw_25fb7Xe9ctkFY6bkFCEU3LhY1bbZlH77hvhVXOEifVOVyLVoBqe1Pk3CIwT8O--Zow/exec'; // ← Paste URL deployment GAS di sini
+const API_URL = 'https://script.google.com/macros/s/AKfycbw_25fb7Xe9ctkFY6bkFCEU3LhY1bbZlH77hvhVXOEifVOVyLVoBqe1Pk3CIwT8O--Zow/exec';
 
 /* ── Helpers ── */
 const MN=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
@@ -396,7 +433,20 @@ const genUser=n=>'ortu_'+(n||'siswa').toLowerCase().replace(/\s+/g,'').slice(0,8
 const genPin=()=>String(Math.floor(1000+Math.random()*9000));
 const uid=()=>Math.random().toString(36).slice(2,9)+Date.now().toString(36).slice(-4);
 
-/* ── localStorage helpers (non-API mode) ── */
+/* ── Program badge ── */
+const PROG_STYLE={
+  'Calistung':      {bg:'#F0F2E0',color:'#5A5F28'},
+  'Matematika SD':  {bg:'#EAF6FC',color:'#3A7A9A'},
+  'Matematika SMP': {bg:'#FEF7E0',color:'#9A6A00'},
+  'Matematika SMA': {bg:'#FDEAEA',color:'#A83E3E'},
+};
+function progBadge(p){
+  if(!p)return'';
+  const c=PROG_STYLE[p]||{bg:'#F5F5F5',color:'#666'};
+  return`<span class="prog-badge" style="background:${c.bg};color:${c.color}">${esc(p)}</span>`;
+}
+
+/* ── localStorage helpers ── */
 const lsGet=k=>{try{return JSON.parse(localStorage.getItem(k)||'[]')}catch{return[]}};
 const lsSet=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
 
@@ -405,10 +455,7 @@ let S={students:[],sessions:[],monthly:[],invoices:[]};
 const DB={s:()=>S.students,ses:()=>S.sessions,mon:()=>S.monthly,inv:()=>S.invoices};
 
 function syncLocal(){
-  lsSet('lm_s',   S.students);
-  lsSet('lm_ses', S.sessions);
-  lsSet('lm_mon', S.monthly);
-  lsSet('lm_inv', S.invoices);
+  lsSet('lm_s',S.students);lsSet('lm_ses',S.sessions);lsSet('lm_mon',S.monthly);lsSet('lm_inv',S.invoices);
 }
 
 /* ── Spinner ── */
@@ -428,41 +475,87 @@ async function apiPost(action,data={}){
   return res.json();
 }
 
-/* ── Sample data (non-API mode only) ── */
+/* ── Image compression ── */
+async function compressImage(file){
+  return new Promise(resolve=>{
+    const reader=new FileReader();
+    reader.onload=e=>{
+      const img=new Image();
+      img.onload=()=>{
+        const MAX=450;
+        let w=img.width,h=img.height;
+        if(w>h&&w>MAX){h=Math.round(h*MAX/w);w=MAX;}
+        else if(h>MAX){w=Math.round(w*MAX/h);h=MAX;}
+        const c=document.createElement('canvas');
+        c.width=w;c.height=h;
+        c.getContext('2d').drawImage(img,0,0,w,h);
+        resolve(c.toDataURL('image/jpeg',0.5));
+      };
+      img.src=e.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+/* ── Doc management ── */
+let _editingDocs=[];
+function previewDocs(){
+  const files=document.getElementById('mses-docs').files;
+  if(!files.length)return;
+  if(_editingDocs.length+files.length>3){
+    alert('Maksimal 3 foto per sesi. Hapus foto yang ada terlebih dahulu.');
+    document.getElementById('mses-docs').value='';
+    return;
+  }
+  Array.from(files).forEach(f=>{
+    compressImage(f).then(b64=>{_editingDocs.push(b64);_renderDocPreview();});
+  });
+  document.getElementById('mses-docs').value='';
+}
+function removeDoc(i){_editingDocs.splice(i,1);_renderDocPreview();}
+function _renderDocPreview(){
+  document.getElementById('mses-doc-preview').innerHTML=_editingDocs.map((d,i)=>`
+    <div class="doc-prev-item">
+      <img src="${d}" alt="foto ${i+1}">
+      <button class="doc-prev-rm" onclick="removeDoc(${i})">✕</button>
+    </div>`).join('');
+}
+
+/* ── Sample data ── */
 function initSample(){
   S.students=[
-    {id:'s1',name:'Alya Putri Sari',grade:'Kelas 7',school:'SMPN 3',startDate:'2025-01-10',username:'ortu_alya',pin:'2841',note:'Fokus geometri & aljabar'},
-    {id:'s2',name:'Budi Santoso',   grade:'Kelas 9',school:'SMPN 1',startDate:'2025-02-05',username:'ortu_budi',pin:'5517',note:''},
+    {id:'s1',name:'Alya Putri Sari',program:'Matematika SMP',grade:'Kelas 7',school:'SMPN 3',startDate:'2025-01-10',username:'ortu_alya',pin:'2841',note:'Fokus geometri & aljabar'},
+    {id:'s2',name:'Budi Santoso',   program:'Matematika SMP',grade:'Kelas 9',school:'SMPN 1',startDate:'2025-02-05',username:'ortu_budi',pin:'5517',note:''},
   ];
   S.sessions=[
-    {id:'e1',studentId:'s1',date:'2025-06-05',present:true, material:'Persamaan linear satu variabel\n• Konsep variabel dan konstanta\n• Langkah penyelesaian PLSV',homework:'Kerjakan hal. 45 no. 1–10',note:'Alya mulai paham konsep dasar. Perlu latihan lebih banyak soal cerita.'},
-    {id:'e2',studentId:'s1',date:'2025-06-02',present:true, material:'Ulangan harian: Bilangan bulat dan pecahan',homework:'',note:'Nilai bagus! Perhatikan ketelitian pada soal pecahan campuran.'},
-    {id:'e3',studentId:'s2',date:'2025-06-04',present:false,material:'',homework:'',note:'Izin — sakit.'},
-    {id:'e4',studentId:'s2',date:'2025-06-01',present:true, material:'Teorema Pythagoras\n• Identifikasi segitiga siku-siku\n• Menghitung sisi yang tidak diketahui',homework:'Latihan soal hal. 78–79',note:'Budi sangat aktif bertanya. Perlu penguatan pada soal aplikasi.'},
+    {id:'e1',studentId:'s1',date:'2025-06-05',startTime:'15:00',endTime:'16:30',present:true, material:'Persamaan linear satu variabel\n• Konsep variabel dan konstanta\n• Langkah penyelesaian PLSV',homework:'Kerjakan hal. 45 no. 1–10',note:'Alya mulai paham konsep dasar.',docs:[]},
+    {id:'e2',studentId:'s1',date:'2025-06-02',startTime:'15:00',endTime:'16:30',present:true, material:'Ulangan harian: Bilangan bulat dan pecahan',homework:'',note:'Nilai bagus!',docs:[]},
+    {id:'e3',studentId:'s2',date:'2025-06-04',startTime:'',   endTime:'',    present:false,material:'',homework:'',note:'Izin — sakit.',docs:[]},
+    {id:'e4',studentId:'s2',date:'2025-06-01',startTime:'16:00',endTime:'17:30',present:true, material:'Teorema Pythagoras',homework:'Latihan soal hal. 78–79',note:'Budi aktif bertanya.',docs:[]},
   ];
   S.monthly=[
-    {id:'m1',studentId:'s1',monthYear:'2025-05',narrative:'Alya menunjukkan kemajuan yang konsisten sepanjang bulan Mei. Pemahaman terhadap operasi bilangan bulat semakin kuat, dan Alya mulai berani mengerjakan soal di papan tulis. Kehadiran penuh dan sangat antusias.',nextNotes:'Bulan Juni: masuk materi persamaan linear. Perbanyak latihan soal cerita.'},
-    {id:'m2',studentId:'s2',monthYear:'2025-05',narrative:'Budi cukup aktif dan selalu mengerjakan PR tepat waktu. Pemahaman teorema Pythagoras masih perlu penguatan, terutama pada soal kontekstual.',nextNotes:'Fokus pada soal cerita dan geometri bangun datar.'},
+    {id:'m1',studentId:'s1',monthYear:'2025-05',narrative:'Alya menunjukkan kemajuan yang konsisten sepanjang bulan Mei.',nextNotes:'Bulan Juni: masuk materi persamaan linear.'},
+    {id:'m2',studentId:'s2',monthYear:'2025-05',narrative:'Budi cukup aktif dan selalu mengerjakan PR tepat waktu.',nextNotes:'Fokus pada soal cerita dan geometri bangun datar.'},
   ];
   S.invoices=[
-    {id:'i1',studentId:'s1',monthYear:'2025-06',amount:500000,status:'belum',dueDate:'2025-06-10',paidDate:''},
-    {id:'i2',studentId:'s1',monthYear:'2025-05',amount:500000,status:'lunas',dueDate:'2025-05-10',paidDate:'2025-05-08'},
-    {id:'i3',studentId:'s2',monthYear:'2025-06',amount:600000,status:'belum',dueDate:'2025-06-10',paidDate:''},
-    {id:'i4',studentId:'s2',monthYear:'2025-05',amount:600000,status:'lunas',dueDate:'2025-05-10',paidDate:'2025-05-07'},
+    {id:'i1',studentId:'s1',monthYear:'2025-06',amount:500000,status:'belum',dueDate:'2025-06-10',paidDate:'',paymentMethod:''},
+    {id:'i2',studentId:'s1',monthYear:'2025-05',amount:500000,status:'lunas',dueDate:'2025-05-10',paidDate:'2025-05-08',paymentMethod:'transfer'},
+    {id:'i3',studentId:'s2',monthYear:'2025-06',amount:600000,status:'belum',dueDate:'2025-06-10',paidDate:'',paymentMethod:''},
+    {id:'i4',studentId:'s2',monthYear:'2025-05',amount:600000,status:'lunas',dueDate:'2025-05-10',paidDate:'2025-05-07',paymentMethod:'cash'},
   ];
   syncLocal();
 }
 
 /* ── Navigation ── */
-const PAGES=['siswa','sesi','bulanan','tagihan'];
+const PAGES=['siswa','jurnal','progress','tagihan'];
 function showPage(name){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('page-'+name).classList.add('active');
   document.querySelectorAll('.tab-btn')[PAGES.indexOf(name)].classList.add('active');
-  if(name==='sesi')   {fillStudentFilter('f-ses-student');fillMonthFilter();renderSessions();renderSessionSummary();}
-  if(name==='bulanan'){fillStudentFilter('f-mon-student');fillMonthlyFilter();renderMonthly();}
-  if(name==='tagihan'){fillStudentFilter('f-inv-student');renderInvoices();renderInvoiceSummary();}
+  if(name==='jurnal')   {fillStudentFilter('f-ses-student');fillMonthFilter();renderSessions();renderSessionSummary();}
+  if(name==='progress') {fillStudentFilter('f-mon-student');fillMonthlyFilter();renderMonthly();}
+  if(name==='tagihan')  {fillStudentFilter('f-inv-student');renderInvoices();renderInvoiceSummary();}
 }
 
 /* ── Modals ── */
@@ -507,6 +600,7 @@ function renderStudents(){
         <div class="sc-avatar">${ini(s.name)}</div>
         <div><div class="sc-name">${esc(s.name)}</div><div class="sc-sub">${esc(s.grade||'—')} · ${esc(s.school||'—')}</div></div>
       </div>
+      ${s.program?`<div>${progBadge(s.program)}</div>`:''}
       <div class="sc-row">📅 Mulai: <span>${fmtDS(s.startDate)}</span></div>
       ${s.note?`<div class="sc-row">📌 <span>${esc(s.note)}</span></div>`:''}
       <div class="cred-box">🔑 Username: <strong>${esc(s.username)}</strong> &nbsp;|&nbsp; PIN: <strong>${esc(s.pin)}</strong></div>
@@ -515,15 +609,16 @@ function renderStudents(){
 
 function openStudentModal(id=''){
   const s=id?DB.s().find(x=>x.id===id):null;
-  document.getElementById('mst-title').textContent=s?'Edit Siswa':'Tambah Siswa';
-  document.getElementById('mst-id').value    =s?.id       ||'';
-  document.getElementById('mst-name').value  =s?.name     ||'';
-  document.getElementById('mst-grade').value =s?.grade    ||'';
-  document.getElementById('mst-school').value=s?.school   ||'';
-  document.getElementById('mst-start').value =s?.startDate||'';
-  document.getElementById('mst-user').value  =s?.username ||'';
-  document.getElementById('mst-pin').value   =s?.pin      ||'';
-  document.getElementById('mst-note').value  =s?.note     ||'';
+  document.getElementById('mst-title').textContent  =s?'Edit Siswa':'Tambah Siswa';
+  document.getElementById('mst-id').value           =s?.id       ||'';
+  document.getElementById('mst-name').value         =s?.name     ||'';
+  document.getElementById('mst-program').value      =s?.program  ||'';
+  document.getElementById('mst-grade').value        =s?.grade    ||'';
+  document.getElementById('mst-school').value       =s?.school   ||'';
+  document.getElementById('mst-start').value        =s?.startDate||'';
+  document.getElementById('mst-user').value         =s?.username ||'';
+  document.getElementById('mst-pin').value          =s?.pin      ||'';
+  document.getElementById('mst-note').value         =s?.note     ||'';
   openModal('modal-student');
 }
 
@@ -533,6 +628,7 @@ async function saveStudent(){
   const id=document.getElementById('mst-id').value;
   const data={
     id,name,
+    program:  document.getElementById('mst-program').value,
     grade:    document.getElementById('mst-grade').value.trim(),
     school:   document.getElementById('mst-school').value.trim(),
     startDate:document.getElementById('mst-start').value,
@@ -554,7 +650,7 @@ async function saveStudent(){
   renderStudents();
 }
 
-/* ════ SESSIONS ════ */
+/* ════ SESSIONS / JURNAL ════ */
 function renderSessionSummary(){
   const arr=DB.ses();
   const h=arr.filter(s=>s.present).length;
@@ -574,15 +670,18 @@ function renderSessions(){
   arr.sort((a,b)=>b.date.localeCompare(a.date));
   const students=DB.s();
   const list=document.getElementById('session-list');
-  if(!arr.length){list.innerHTML='<div class="empty"><div class="ei">📭</div><p>Belum ada catatan sesi</p></div>';return;}
+  if(!arr.length){list.innerHTML='<div class="empty"><div class="ei">📭</div><p>Belum ada jurnal sesi</p></div>';return;}
   list.innerHTML=arr.map(s=>{
     const st=students.find(x=>x.id===s.studentId);
+    const timeStr=(s.startTime||s.endTime)?` · ${s.startTime||'?'} – ${s.endTime||'?'}`:'';
+    const hasDocs=s.docs&&s.docs.length>0;
     return`<div class="session-item" id="si-${s.id}">
       <div class="si-head" onclick="toggleSI('${s.id}')">
         <div style="flex:1">
-          <div style="display:flex;align-items:center;gap:8px">
-            <div class="si-date">${fmtDS(s.date)}</div>
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+            <div class="si-date">${fmtDS(s.date)}${timeStr}</div>
             <span class="badge badge-${s.present?'hadir':'absent'}">${s.present?'✅ Hadir':'❌ Tidak Hadir'}</span>
+            ${hasDocs?`<span style="font-size:11px;color:var(--muted)">📷 ${s.docs.length}</span>`:''}
           </div>
           <div class="si-student">${esc(st?.name||'—')}</div>
         </div>
@@ -593,6 +692,7 @@ function renderSessions(){
           ${s.material?`<div class="rfield"><div class="rfield-label">📖 Materi</div><div class="rfield-val">${esc(s.material)}</div></div>`:''}
           ${s.homework?`<div class="rfield"><div class="rfield-label">✏️ PR / Tugas</div><div class="rfield-val">${esc(s.homework)}</div></div>`:''}
           ${s.note    ?`<div class="rfield"><div class="rfield-label">📝 Catatan</div><div class="rfield-val">${esc(s.note)}</div></div>`:''}
+          ${hasDocs   ?`<div class="rfield"><div class="rfield-label">📷 Dokumentasi</div><div class="doc-thumbs">${s.docs.map(d=>`<img src="${d}" alt="foto" onclick="window.open(this.src)">`).join('')}</div></div>`:''}
         `:`
           ${s.note?`<div class="rfield"><div class="rfield-label">📝 Keterangan</div><div class="rfield-val">${esc(s.note)}</div></div>`
                   :'<div style="color:var(--muted);font-size:13px;padding:4px 0">Tidak hadir pada sesi ini.</div>'}
@@ -610,14 +710,17 @@ function toggleSI(id){document.getElementById('si-'+id)?.classList.toggle('open'
 
 function openSessionModal(id=''){
   const s=id?DB.ses().find(x=>x.id===id):null;
-  document.getElementById('mses-title').textContent=s?'Edit Sesi':'Tambah Sesi';
-  document.getElementById('mses-id').value      =s?.id      ||'';
-  document.getElementById('mses-date').value    =s?.date    ||new Date().toISOString().slice(0,10);
-  document.getElementById('mses-material').value=s?.material||'';
-  document.getElementById('mses-hw').value      =s?.homework||'';
-  document.getElementById('mses-note').value    =s?.note    ||'';
-  document.getElementById('att-h').checked=!s||s.present;
-  document.getElementById('att-a').checked=!!(s&&!s.present);
+  document.getElementById('mses-title').textContent  =s?'Edit Jurnal':'Tambah Jurnal';
+  document.getElementById('mses-id').value           =s?.id       ||'';
+  document.getElementById('mses-date').value         =s?.date     ||new Date().toISOString().slice(0,10);
+  document.getElementById('mses-status').value       =(!s||s.present)?'hadir':'tidak';
+  document.getElementById('mses-start').value        =s?.startTime||'';
+  document.getElementById('mses-end').value          =s?.endTime  ||'';
+  document.getElementById('mses-material').value     =s?.material ||'';
+  document.getElementById('mses-hw').value           =s?.homework ||'';
+  document.getElementById('mses-note').value         =s?.note     ||'';
+  _editingDocs=s?.docs?[...s.docs]:[];
+  _renderDocPreview();
   fillStudentDD('mses-student',s?.studentId||'');
   openModal('modal-session');
 }
@@ -629,10 +732,13 @@ async function saveSession(){
   const id=document.getElementById('mses-id').value;
   const data={
     id,studentId,date,
-    present:  document.getElementById('att-h').checked,
+    present:  document.getElementById('mses-status').value==='hadir',
+    startTime:document.getElementById('mses-start').value,
+    endTime:  document.getElementById('mses-end').value,
     material: document.getElementById('mses-material').value.trim(),
     homework: document.getElementById('mses-hw').value.trim(),
     note:     document.getElementById('mses-note').value.trim(),
+    docs:     [..._editingDocs],
   };
   if(API_URL){
     showSpinner();
@@ -644,6 +750,7 @@ async function saveSession(){
   if(id){const i=S.sessions.findIndex(x=>x.id===id);if(i>=0)S.sessions[i]={...S.sessions[i],...data};}
   else S.sessions.push({...data,id:data.id||uid()});
   if(!API_URL)syncLocal();
+  _editingDocs=[];
   closeModal('modal-session');
   fillMonthFilter();
   renderSessions();
@@ -651,14 +758,14 @@ async function saveSession(){
 }
 
 async function deleteSession(id){
-  if(!confirm('Hapus catatan sesi ini?'))return;
+  if(!confirm('Hapus jurnal sesi ini?'))return;
   if(API_URL){showSpinner();await apiPost('delete_session',{id});hideSpinner();}
   S.sessions=S.sessions.filter(s=>s.id!==id);
   if(!API_URL)syncLocal();
   renderSessions();renderSessionSummary();
 }
 
-/* ════ MONTHLY ════ */
+/* ════ MONTHLY / PROGRESS ════ */
 function renderMonthly(){
   const fSt=document.getElementById('f-mon-student').value;
   const fMo=document.getElementById('f-mon-month').value;
@@ -668,7 +775,7 @@ function renderMonthly(){
   arr.sort((a,b)=>b.monthYear.localeCompare(a.monthYear));
   const students=DB.s();
   const list=document.getElementById('monthly-list');
-  if(!arr.length){list.innerHTML='<div class="empty"><div class="ei">📭</div><p>Belum ada laporan bulanan</p></div>';return;}
+  if(!arr.length){list.innerHTML='<div class="empty"><div class="ei">📭</div><p>Belum ada laporan progress</p></div>';return;}
   list.innerHTML=arr.map(r=>{
     const st=students.find(s=>s.id===r.studentId);
     return`<div class="monthly-card">
@@ -688,7 +795,7 @@ function renderMonthly(){
 function openMonthlyModal(id=''){
   const r=id?DB.mon().find(x=>x.id===id):null;
   const now=new Date();
-  document.getElementById('mmon-title').textContent=r?'Edit Laporan Bulanan':'Tambah Laporan Bulanan';
+  document.getElementById('mmon-title').textContent=r?'Edit Progress':'Tambah Progress';
   document.getElementById('mmon-id').value    =r?.id       ||'';
   document.getElementById('mmon-my').value    =r?.monthYear||`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;
   document.getElementById('mmon-narasi').value=r?.narrative||'';
@@ -702,32 +809,19 @@ async function saveMonthly(){
   const monthYear=document.getElementById('mmon-my').value;
   if(!studentId||!monthYear){alert('Pilih siswa dan bulan!');return;}
   const id=document.getElementById('mmon-id').value;
-  const data={
-    id,studentId,monthYear,
-    narrative:document.getElementById('mmon-narasi').value.trim(),
-    nextNotes:document.getElementById('mmon-next').value.trim(),
-  };
-  if(API_URL){
-    showSpinner();
-    const res=await apiPost('save_monthly',data);
-    hideSpinner();
-    if(res.error){alert('Gagal menyimpan: '+res.error);return;}
-    data.id=res.id;
-  }
+  const data={id,studentId,monthYear,narrative:document.getElementById('mmon-narasi').value.trim(),nextNotes:document.getElementById('mmon-next').value.trim()};
+  if(API_URL){showSpinner();const res=await apiPost('save_monthly',data);hideSpinner();if(res.error){alert('Gagal menyimpan: '+res.error);return;}data.id=res.id;}
   if(id){const i=S.monthly.findIndex(x=>x.id===id);if(i>=0)S.monthly[i]={...S.monthly[i],...data};}
   else S.monthly.push({...data,id:data.id||uid()});
   if(!API_URL)syncLocal();
-  closeModal('modal-monthly');
-  fillMonthlyFilter();
-  renderMonthly();
+  closeModal('modal-monthly');fillMonthlyFilter();renderMonthly();
 }
 
 async function deleteMonthly(id){
-  if(!confirm('Hapus laporan bulanan ini?'))return;
+  if(!confirm('Hapus laporan progress ini?'))return;
   if(API_URL){showSpinner();await apiPost('delete_monthly',{id});hideSpinner();}
   S.monthly=S.monthly.filter(r=>r.id!==id);
-  if(!API_URL)syncLocal();
-  renderMonthly();
+  if(!API_URL)syncLocal();renderMonthly();
 }
 
 /* ════ INVOICES ════ */
@@ -755,13 +849,17 @@ function renderInvoices(){
   list.innerHTML=arr.map(inv=>{
     const st=students.find(s=>s.id===inv.studentId);
     const paid=inv.status==='lunas';
+    const mBadge=inv.paymentMethod==='transfer'?`<span class="method-badge method-transfer">🏦 Transfer</span>`:
+                 inv.paymentMethod==='cash'?`<span class="method-badge method-cash">💵 Tunai</span>`:'';
     return`<div class="inv-card${paid?' lunas':''}">
       <div class="inv-top">
         <div><div class="inv-title">${fmtMY(inv.monthYear)}</div><div class="inv-sub">${esc(st?.name||'—')}</div></div>
         <span class="status-badge status-${paid?'lunas':'belum'}">${paid?'✅ Lunas':'⏳ Belum Lunas'}</span>
       </div>
       <div class="inv-amount">Rp ${fmt(inv.amount)}</div>
+      ${mBadge}
       <div class="inv-dates">Jatuh Tempo: ${fmtDS(inv.dueDate)}${inv.paidDate?' &nbsp;·&nbsp; Dibayar: '+fmtDS(inv.paidDate):''}</div>
+      ${!paid?`<div class="bni-box">🏦 Transfer ke <strong>BNI</strong> · No. Rek <strong>0673690383</strong> · a.n. <strong>Najlarafah Is Laisa</strong></div>`:''}
       <div class="inv-actions">
         ${!paid?`<button class="btn btn-green btn-sm" onclick="markPaid('${inv.id}')">✅ Tandai Lunas</button>`
                :`<button class="btn btn-ghost btn-sm" onclick="markUnpaid('${inv.id}')">↩️ Batalkan</button>`}
@@ -773,20 +871,35 @@ function renderInvoices(){
 }
 
 function togglePaidDate(){document.getElementById('minv-paid-group').style.display=document.getElementById('minv-status').value==='lunas'?'block':'none';}
+function togglePaymentInfo(){document.getElementById('minv-bni-info').style.display=document.getElementById('minv-method').value==='transfer'?'block':'none';}
 
-function openInvoiceModal(id=''){
+function openInvoiceModal(id='',presetLunas=false){
   const inv=id?DB.inv().find(x=>x.id===id):null;
   const now=new Date();
-  document.getElementById('minv-title').textContent=inv?'Edit Tagihan':'Tambah Tagihan';
-  document.getElementById('minv-id').value      =inv?.id        ||'';
-  document.getElementById('minv-my').value      =inv?.monthYear ||`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;
-  document.getElementById('minv-amount').value  =inv?.amount    ||'';
-  document.getElementById('minv-due').value     =inv?.dueDate   ||'';
-  document.getElementById('minv-status').value  =inv?.status    ||'belum';
-  document.getElementById('minv-paiddate').value =inv?.paidDate ||'';
-  document.getElementById('minv-paid-group').style.display=inv?.status==='lunas'?'block':'none';
+  document.getElementById('minv-title').textContent  =inv?'Edit Tagihan':'Tambah Tagihan';
+  document.getElementById('minv-id').value           =inv?.id         ||'';
+  document.getElementById('minv-my').value           =inv?.monthYear  ||`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;
+  document.getElementById('minv-amount').value       =inv?.amount     ||'';
+  document.getElementById('minv-due').value          =inv?.dueDate    ||'';
+  document.getElementById('minv-method').value       =inv?.paymentMethod||'';
+  const status=presetLunas?'lunas':(inv?.status||'belum');
+  document.getElementById('minv-status').value       =status;
+  document.getElementById('minv-paiddate').value     =presetLunas?now.toISOString().slice(0,10):(inv?.paidDate||'');
+  togglePaidDate();
+  togglePaymentInfo();
   fillStudentDD('minv-student',inv?.studentId||'');
   openModal('modal-invoice');
+}
+
+function markPaid(id){openInvoiceModal(id,true);}
+
+async function markUnpaid(id){
+  const i=S.invoices.findIndex(x=>x.id===id);if(i<0)return;
+  const data={...S.invoices[i],status:'belum',paidDate:'',paymentMethod:''};
+  if(API_URL){showSpinner();await apiPost('save_invoice',data);hideSpinner();}
+  S.invoices[i]=data;
+  if(!API_URL)syncLocal();
+  renderInvoices();renderInvoiceSummary();
 }
 
 async function saveInvoice(){
@@ -797,40 +910,17 @@ async function saveInvoice(){
   const status=document.getElementById('minv-status').value;
   const data={
     id,studentId,monthYear,
-    amount:  document.getElementById('minv-amount').value,
-    dueDate: document.getElementById('minv-due').value,
+    amount:        document.getElementById('minv-amount').value,
+    dueDate:       document.getElementById('minv-due').value,
     status,
-    paidDate:status==='lunas'?document.getElementById('minv-paiddate').value:'',
+    paidDate:      status==='lunas'?document.getElementById('minv-paiddate').value:'',
+    paymentMethod: document.getElementById('minv-method').value,
   };
-  if(API_URL){
-    showSpinner();
-    const res=await apiPost('save_invoice',data);
-    hideSpinner();
-    if(res.error){alert('Gagal menyimpan: '+res.error);return;}
-    data.id=res.id;
-  }
+  if(API_URL){showSpinner();const res=await apiPost('save_invoice',data);hideSpinner();if(res.error){alert('Gagal menyimpan: '+res.error);return;}data.id=res.id;}
   if(id){const i=S.invoices.findIndex(x=>x.id===id);if(i>=0)S.invoices[i]={...S.invoices[i],...data};}
   else S.invoices.push({...data,id:data.id||uid()});
   if(!API_URL)syncLocal();
   closeModal('modal-invoice');
-  renderInvoices();renderInvoiceSummary();
-}
-
-async function markPaid(id){
-  const i=S.invoices.findIndex(x=>x.id===id);if(i<0)return;
-  const data={...S.invoices[i],status:'lunas',paidDate:new Date().toISOString().slice(0,10)};
-  if(API_URL){showSpinner();await apiPost('save_invoice',data);hideSpinner();}
-  S.invoices[i]=data;
-  if(!API_URL)syncLocal();
-  renderInvoices();renderInvoiceSummary();
-}
-
-async function markUnpaid(id){
-  const i=S.invoices.findIndex(x=>x.id===id);if(i<0)return;
-  const data={...S.invoices[i],status:'belum',paidDate:''};
-  if(API_URL){showSpinner();await apiPost('save_invoice',data);hideSpinner();}
-  S.invoices[i]=data;
-  if(!API_URL)syncLocal();
   renderInvoices();renderInvoiceSummary();
 }
 
@@ -848,11 +938,18 @@ async function deleteInvoice(id){
     showSpinner();
     try{
       const d=await apiFetch('get_admin');
-      S={students:d.students||[],sessions:d.sessions||[],monthly:d.monthly||[],invoices:d.invoices||[]};
+      // Normalise: pastikan docs selalu array
+      const sessions=(d.sessions||[]).map(s=>({...s,docs:Array.isArray(s.docs)?s.docs:[]}));
+      S={students:d.students||[],sessions,monthly:d.monthly||[],invoices:d.invoices||[]};
     }catch(e){alert('Gagal memuat data: '+e.message);}
     hideSpinner();
   } else {
-    S={students:lsGet('lm_s'),sessions:lsGet('lm_ses'),monthly:lsGet('lm_mon'),invoices:lsGet('lm_inv')};
+    S={
+      students:lsGet('lm_s'),
+      sessions:(lsGet('lm_ses')).map(s=>({...s,docs:Array.isArray(s.docs)?s.docs:[]})),
+      monthly: lsGet('lm_mon'),
+      invoices:lsGet('lm_inv'),
+    };
     if(!S.students.length)initSample();
   }
   renderStudents();

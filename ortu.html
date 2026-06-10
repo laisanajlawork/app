@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Laisa Math Coaching — Portal Orang Tua</title>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
   --P:  #C85555; --Pd: #A83E3E; --Pl: #FDEAEA;
@@ -16,7 +16,7 @@
   --ink: #3D1E1E; --muted: #8A6060;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Nunito',sans-serif;background:var(--paper);color:var(--ink);min-height:100vh;}
+body{font-family:'Poppins',sans-serif;background:var(--paper);color:var(--ink);min-height:100vh;}
 
 /* ── Header ── */
 header{background:linear-gradient(135deg,var(--Pd) 0%,var(--P) 60%,#D96868 100%);padding:1.25rem 1.5rem 1rem;position:relative;overflow:hidden;}
@@ -31,7 +31,7 @@ header p{font-size:11.5px;color:rgba(255,255,255,.7);margin-top:3px;font-weight:
 .h-dots{position:absolute;right:1rem;bottom:.75rem;display:flex;gap:5px;z-index:1;}
 .h-dots span{width:7px;height:7px;border-radius:50%;}
 .d1{background:var(--A);}.d2{background:rgba(255,255,255,.6);}.d3{background:#EDE5D4;opacity:.7;}.d4{background:#fff;opacity:.4;}
-.logout-btn{padding:6px 12px;border-radius:8px;border:1.5px solid rgba(255,255,255,.4);background:rgba(255,255,255,.15);color:#fff;font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;cursor:pointer;flex-shrink:0;}
+.logout-btn{padding:6px 12px;border-radius:8px;border:1.5px solid rgba(255,255,255,.4);background:rgba(255,255,255,.15);color:#fff;font-family:'Poppins',sans-serif;font-size:12px;font-weight:700;cursor:pointer;flex-shrink:0;}
 .logout-btn:hover{background:rgba(255,255,255,.28);}
 
 main{max-width:700px;margin:0 auto;padding:1.5rem 1.25rem 4rem;}
@@ -44,9 +44,9 @@ main{max-width:700px;margin:0 auto;padding:1.5rem 1.25rem 4rem;}
 .login-sub{font-size:13px;color:var(--muted);text-align:center;margin-bottom:1.5rem;font-weight:500;line-height:1.5;}
 .form-group{margin-bottom:1rem;}
 .form-group label{display:block;font-size:11.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
-.form-input{width:100%;padding:11px 14px;border-radius:10px;border:1.5px solid var(--border);font-family:'Nunito',sans-serif;font-size:15px;font-weight:600;background:#fff;color:var(--ink);transition:border-color .15s;}
+.form-input{width:100%;padding:11px 14px;border-radius:10px;border:1.5px solid var(--border);font-family:'Poppins',sans-serif;font-size:15px;font-weight:600;background:#fff;color:var(--ink);transition:border-color .15s;}
 .form-input:focus{outline:none;border-color:var(--P);box-shadow:0 0 0 3px rgba(200,85,85,.08);}
-.btn-login{width:100%;padding:12px;border-radius:12px;border:none;background:var(--P);color:#fff;font-family:'Nunito',sans-serif;font-size:15px;font-weight:800;cursor:pointer;transition:background .15s;margin-top:.25rem;}
+.btn-login{width:100%;padding:12px;border-radius:12px;border:none;background:var(--P);color:#fff;font-family:'Poppins',sans-serif;font-size:15px;font-weight:800;cursor:pointer;transition:background .15s;margin-top:.25rem;}
 .btn-login:hover{background:var(--Pd);}
 .login-err{background:var(--Ml);color:var(--Md);border-radius:10px;padding:10px 14px;font-size:13px;font-weight:700;margin-top:.75rem;display:none;text-align:center;}
 
@@ -58,15 +58,16 @@ main{max-width:700px;margin:0 auto;padding:1.5rem 1.25rem 4rem;}
 .bio-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
 .bio-field label{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:2px;}
 .bio-field span{font-size:13px;font-weight:600;}
+.prog-badge{display:inline-block;padding:2px 9px;border-radius:6px;font-size:10.5px;font-weight:700;margin-top:8px;}
 
 /* ── Tabs ── */
 .tab-bar{display:flex;background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:4px;gap:4px;margin-bottom:1.25rem;overflow-x:auto;}
 .tab-bar::-webkit-scrollbar{display:none;}
-.tab-btn{flex:1;min-width:max-content;padding:9px 10px;border-radius:10px;border:none;background:transparent;font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;color:var(--muted);cursor:pointer;transition:all .15s;white-space:nowrap;}
+.tab-btn{flex:1;min-width:max-content;padding:9px 10px;border-radius:10px;border:none;background:transparent;font-family:'Poppins',sans-serif;font-size:12px;font-weight:700;color:var(--muted);cursor:pointer;transition:all .15s;white-space:nowrap;}
 .tab-btn.active{background:var(--P);color:#fff;}
 .tab-content{display:none;}.tab-content.active{display:block;}
 
-/* ── Report cards (sesi harian) ── */
+/* ── Report cards (jurnal harian) ── */
 .report-card{border:1.5px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:8px;}
 .rep-head{display:flex;align-items:center;padding:11px 14px;cursor:pointer;user-select:none;background:var(--paper);transition:background .15s;}
 .rep-head:hover{background:var(--Vl);}
@@ -82,8 +83,10 @@ main{max-width:700px;margin:0 auto;padding:1.5rem 1.25rem 4rem;}
 .rfield-val{font-size:13px;line-height:1.6;white-space:pre-wrap;}
 .badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:6px;font-size:11px;font-weight:700;flex-shrink:0;}
 .badge-hadir{background:var(--Bl);color:var(--Bd);}.badge-absent{background:var(--Ml);color:var(--Md);}
+.doc-thumbs{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;}
+.doc-thumbs img{width:72px;height:72px;object-fit:cover;border-radius:8px;border:1.5px solid var(--border);cursor:pointer;}
 
-/* ── Monthly ── */
+/* ── Progress bulanan ── */
 .monthly-card{border:1.5px solid var(--border);border-radius:12px;padding:14px;margin-bottom:8px;background:var(--paper);}
 .mc-title{font-size:15px;font-weight:800;margin-bottom:4px;}
 .mc-body{font-size:13px;line-height:1.65;color:var(--ink);border-left:3px solid var(--P);padding-left:12px;margin:10px 0;white-space:pre-wrap;}
@@ -98,7 +101,9 @@ main{max-width:700px;margin:0 auto;padding:1.5rem 1.25rem 4rem;}
 .inv-dates{font-size:11.5px;color:var(--muted);margin-top:6px;}
 .status-badge{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;font-size:11px;font-weight:700;}
 .status-lunas{background:var(--Bl);color:var(--Bd);}.status-belum{background:var(--Ml);color:var(--Md);}
-.bank-box{background:var(--Vl);border:1.5px solid var(--V);border-radius:10px;padding:12px 14px;font-size:13px;font-weight:600;color:#3A7A9A;margin-top:1rem;}
+.method-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:6px;font-size:10.5px;font-weight:700;margin-top:5px;}
+.method-transfer{background:var(--Vl);color:var(--Vd);}.method-cash{background:var(--Bl);color:var(--Bd);}
+.bank-box{background:var(--Vl);border:1.5px solid var(--V);border-radius:10px;padding:12px 14px;font-size:13px;font-weight:600;color:#3A7A9A;margin-top:1rem;line-height:1.75;}
 
 /* ── Absensi summary ── */
 .absen-summary{display:flex;gap:10px;margin-bottom:1.25rem;}
@@ -175,24 +180,25 @@ footer{text-align:center;padding:1.5rem;font-size:12px;color:var(--muted);font-w
         <div class="bio-field"><label>Mulai Les</label><span id="bio-start">—</span></div>
         <div class="bio-field"><label>Status</label><span style="color:var(--B);font-weight:700">🟢 Aktif</span></div>
       </div>
+      <div id="bio-program"></div>
       <div id="bio-note" style="display:none;margin-top:10px;padding:10px 12px;background:var(--cream);border-radius:10px;font-size:13px;color:var(--muted);"></div>
     </div>
 
     <!-- Tabs -->
     <div class="tab-bar">
-      <button class="tab-btn active" onclick="showTab('harian')">📋 Lap. Harian</button>
-      <button class="tab-btn"        onclick="showTab('bulanan')">📊 Lap. Bulanan</button>
+      <button class="tab-btn active" onclick="showTab('jurnal')">📋 Jurnal</button>
+      <button class="tab-btn"        onclick="showTab('progress')">📊 Progress</button>
       <button class="tab-btn"        onclick="showTab('tagihan')">💰 Tagihan</button>
     </div>
 
-    <!-- Tab: Harian -->
-    <div class="tab-content active" id="tab-harian">
+    <!-- Tab: Jurnal Harian -->
+    <div class="tab-content active" id="tab-jurnal">
       <div class="absen-summary" id="absen-summary"></div>
       <div id="daily-list"></div>
     </div>
 
-    <!-- Tab: Bulanan -->
-    <div class="tab-content" id="tab-bulanan">
+    <!-- Tab: Progress Bulanan -->
+    <div class="tab-content" id="tab-progress">
       <div id="monthly-list"></div>
     </div>
 
@@ -218,7 +224,7 @@ footer{text-align:center;padding:1.5rem;font-size:12px;color:var(--muted);font-w
 /* ════════════════════════════════════════════
    CONFIG — isi API_URL setelah deploy GAS
    ════════════════════════════════════════════ */
-const API_URL = 'https://script.google.com/macros/s/AKfycbw_25fb7Xe9ctkFY6bkFCEU3LhY1bbZlH77hvhVXOEifVOVyLVoBqe1Pk3CIwT8O--Zow/exec'; // ← Paste URL deployment GAS di sini (sama dengan index.html)
+const API_URL = 'https://script.google.com/macros/s/AKfycbw_25fb7Xe9ctkFY6bkFCEU3LhY1bbZlH77hvhVXOEifVOVyLVoBqe1Pk3CIwT8O--Zow/exec';
 
 /* ── Helpers ── */
 const MN=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
@@ -229,6 +235,19 @@ const ini=n=>(n||'?').split(' ').slice(0,2).map(w=>w[0]||'').join('').toUpperCas
 const fmtMY=ym=>{if(!ym)return'—';const[y,m]=ym.split('-');return`${MN[parseInt(m)-1]} ${y}`};
 const fmtDS=d=>{if(!d)return'—';return new Date(d+'T00:00:00').toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'})};
 const fmtDL=d=>{if(!d)return'—';return new Date(d+'T00:00:00').toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'})};
+
+/* ── Program badge ── */
+const PROG_STYLE={
+  'Calistung':      {bg:'#F0F2E0',color:'#5A5F28'},
+  'Matematika SD':  {bg:'#EAF6FC',color:'#3A7A9A'},
+  'Matematika SMP': {bg:'#FEF7E0',color:'#9A6A00'},
+  'Matematika SMA': {bg:'#FDEAEA',color:'#A83E3E'},
+};
+function progBadge(p){
+  if(!p)return'';
+  const c=PROG_STYLE[p]||{bg:'#F5F5F5',color:'#666'};
+  return`<span class="prog-badge" style="background:${c.bg};color:${c.color}">${esc(p)}</span>`;
+}
 
 let student=null;
 
@@ -258,28 +277,13 @@ async function doLogin(){
     try{
       const data=await apiFetch('get_parent',{username:u,pin:p});
       hideSpinner();
-      if(data.error){
-        err.textContent=data.error;
-        err.style.display='block';
-        document.getElementById('l-pin').value='';
-        return;
-      }
+      if(data.error){err.textContent=data.error;err.style.display='block';document.getElementById('l-pin').value='';return;}
       localStorage.setItem('lm_portal',JSON.stringify(data));
       _showPortal(data);
-    }catch(e){
-      hideSpinner();
-      err.textContent='Gagal terhubung ke server. Coba lagi.';
-      err.style.display='block';
-    }
+    }catch(e){hideSpinner();err.textContent='Gagal terhubung ke server. Coba lagi.';err.style.display='block';}
   } else {
-    // Fallback: cari dari localStorage (data dari index.html)
     const found=lsGet('lm_s').find(s=>s.username.toLowerCase()===u&&s.pin===p);
-    if(!found){
-      err.textContent='Username atau PIN salah. Silakan coba lagi.';
-      err.style.display='block';
-      document.getElementById('l-pin').value='';
-      return;
-    }
+    if(!found){err.textContent='Username atau PIN salah. Silakan coba lagi.';err.style.display='block';document.getElementById('l-pin').value='';return;}
     const ses =lsGet('lm_ses') .filter(s=>s.studentId===found.id).sort((a,b)=>b.date.localeCompare(a.date));
     const mon =lsGet('lm_mon') .filter(r=>r.studentId===found.id).sort((a,b)=>b.monthYear.localeCompare(a.monthYear));
     const invs=lsGet('lm_inv') .filter(i=>i.studentId===found.id).sort((a,b)=>b.monthYear.localeCompare(a.monthYear));
@@ -289,10 +293,7 @@ async function doLogin(){
   }
 }
 
-function _showPortal(data){
-  student=data.student;
-  renderPortal(data);
-}
+function _showPortal(data){student=data.student;renderPortal(data);}
 
 function logout(){
   student=null;
@@ -319,17 +320,23 @@ function renderPortal(data){
   document.getElementById('bio-school').textContent=s.school||'—';
   document.getElementById('bio-grade').textContent =s.grade ||'—';
   document.getElementById('bio-start').textContent =fmtDS(s.startDate);
+
+  // Program badge
+  const progEl=document.getElementById('bio-program');
+  progEl.innerHTML=s.program?progBadge(s.program):'';
+
   const noteEl=document.getElementById('bio-note');
   if(s.note){noteEl.style.display='block';noteEl.textContent='📌 '+s.note;}
   else noteEl.style.display='none';
 
-  renderDaily(data.sessions||[]);
+  const sessions=(data.sessions||[]).map(x=>({...x,docs:Array.isArray(x.docs)?x.docs:[]}));
+  renderDaily(sessions);
   renderMonthly(data.monthly||[]);
   renderInvoices(data.invoices||[]);
 }
 
 /* ── Tabs ── */
-const TABS=['harian','bulanan','tagihan'];
+const TABS=['jurnal','progress','tagihan'];
 function showTab(name){
   document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
@@ -338,7 +345,7 @@ function showTab(name){
 }
 function toggleCard(id){document.getElementById(id)?.classList.toggle('open');}
 
-/* ── Daily ── */
+/* ── Daily / Jurnal ── */
 function renderDaily(all){
   all=[...all].sort((a,b)=>b.date.localeCompare(a.date));
   const h=all.filter(s=>s.present).length;
@@ -347,15 +354,18 @@ function renderDaily(all){
     <div class="abs-box abs-green"><div class="abs-num">${h}</div><div class="abs-lbl">Hadir</div></div>
     <div class="abs-box abs-red"><div class="abs-num">${all.length-h}</div><div class="abs-lbl">Tidak Hadir</div></div>`;
   const list=document.getElementById('daily-list');
-  if(!all.length){list.innerHTML='<div class="empty"><div class="ei">📭</div><p>Belum ada laporan harian</p></div>';return;}
+  if(!all.length){list.innerHTML='<div class="empty"><div class="ei">📭</div><p>Belum ada jurnal sesi</p></div>';return;}
   list.innerHTML=all.map((s,i)=>{
+    const timeStr=(s.startTime||s.endTime)?` · ${s.startTime||'?'}–${s.endTime||'?'}`:'';
     const prevText=s.present?(s.material||s.note||'—'):'Tidak hadir';
+    const hasDocs=s.docs&&s.docs.length>0;
     return`<div class="report-card" id="rc-${i}">
       <div class="rep-head" onclick="toggleCard('rc-${i}')">
         <div style="flex:1">
-          <div style="display:flex;align-items:center;gap:8px">
-            <div class="rep-date">${fmtDS(s.date)}</div>
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+            <div class="rep-date">${fmtDS(s.date)}${timeStr}</div>
             <span class="badge badge-${s.present?'hadir':'absent'}">${s.present?'✅ Hadir':'❌ Tidak Hadir'}</span>
+            ${hasDocs?`<span style="font-size:11px;color:var(--muted)">📷 ${s.docs.length}</span>`:''}
           </div>
           <div class="rep-prev">${(prevText||'').slice(0,55)}${prevText.length>55?'…':''}</div>
         </div>
@@ -367,18 +377,19 @@ function renderDaily(all){
           ${s.material?`<div class="rfield"><div class="rfield-label">📖 Materi Hari Ini</div><div class="rfield-val">${esc(s.material)}</div></div>`:''}
           ${s.homework?`<div class="rfield"><div class="rfield-label">✏️ PR / Tugas</div><div class="rfield-val">${esc(s.homework)}</div></div>`:''}
           ${s.note    ?`<div class="rfield"><div class="rfield-label">📝 Catatan Tutor</div><div class="rfield-val">${esc(s.note)}</div></div>`:''}
-          ${!s.material&&!s.homework&&!s.note?'<div style="color:var(--muted);font-size:13px">Sesi berlangsung — belum ada catatan detail.</div>':''}
+          ${hasDocs   ?`<div class="rfield"><div class="rfield-label">📷 Dokumentasi</div><div class="doc-thumbs">${s.docs.map(d=>`<img src="${d}" alt="foto" onclick="window.open(this.src)">`).join('')}</div></div>`:''}
+          ${!s.material&&!s.homework&&!s.note&&!hasDocs?'<div style="color:var(--muted);font-size:13px">Sesi berlangsung — belum ada catatan detail.</div>':''}
         `:`<div style="color:var(--muted);font-size:13px;padding:2px 0">${s.note?esc(s.note):'Tidak hadir pada sesi ini.'}</div>`}
       </div>
     </div>`;
   }).join('');
 }
 
-/* ── Monthly ── */
+/* ── Progress Bulanan ── */
 function renderMonthly(all){
   all=[...all].sort((a,b)=>b.monthYear.localeCompare(a.monthYear));
   const list=document.getElementById('monthly-list');
-  if(!all.length){list.innerHTML='<div class="empty"><div class="ei">📭</div><p>Belum ada laporan bulanan</p></div>';return;}
+  if(!all.length){list.innerHTML='<div class="empty"><div class="ei">📭</div><p>Belum ada laporan progress</p></div>';return;}
   list.innerHTML=all.map(r=>`
     <div class="monthly-card">
       <div class="mc-title">${fmtMY(r.monthYear)}</div>
@@ -395,15 +406,24 @@ function renderInvoices(all){
   const hasUnpaid=all.some(i=>i.status!=='lunas');
   list.innerHTML=all.map(inv=>{
     const paid=inv.status==='lunas';
+    const mBadge=inv.paymentMethod==='transfer'?`<span class="method-badge method-transfer">🏦 Transfer</span>`:
+                 inv.paymentMethod==='cash'?`<span class="method-badge method-cash">💵 Tunai</span>`:'';
     return`<div class="inv-card${paid?' lunas':''}">
       <div class="inv-top">
         <div class="inv-title">${fmtMY(inv.monthYear)}</div>
         <span class="status-badge status-${paid?'lunas':'belum'}">${paid?'✅ Lunas':'⏳ Belum Lunas'}</span>
       </div>
       <div class="inv-amount">Rp ${fmt(inv.amount)}</div>
+      ${mBadge}
       <div class="inv-dates">Jatuh Tempo: ${fmtDS(inv.dueDate)}${inv.paidDate?' &nbsp;·&nbsp; Dibayar: '+fmtDS(inv.paidDate):''}</div>
     </div>`;
-  }).join('')+(hasUnpaid?`<div class="bank-box">🏦 Info pembayaran: hubungi tutor untuk detail rekening.</div>`:'');
+  }).join('')+(hasUnpaid?`
+    <div class="bank-box">
+      🏦 <strong>Pembayaran via Transfer Bank</strong><br>
+      Bank BNI &nbsp;·&nbsp; No. Rek: <strong>0673690383</strong><br>
+      a.n. <strong>Najlarafah Is Laisa</strong><br>
+      <span style="font-size:11.5px;color:#5A8AAA">Konfirmasi pembayaran kepada tutor setelah transfer.</span>
+    </div>`:'');
 }
 
 /* ── Auto-login dari sesi tersimpan ── */
