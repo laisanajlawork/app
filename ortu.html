@@ -111,6 +111,13 @@ main{max-width:700px;margin:0 auto;padding:1.5rem 1.25rem 4rem;}
 .abs-num{font-size:22px;font-weight:800;}.abs-lbl{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-top:2px;}
 .abs-green .abs-num{color:var(--B);}.abs-red .abs-num{color:var(--P);}.abs-blue .abs-num{color:var(--Vd);}
 
+/* ── Jurnal toolbar ── */
+.jurnal-toolbar{display:flex;align-items:center;gap:10px;margin-bottom:1rem;flex-wrap:wrap;}
+.jurnal-toolbar select{flex:1;min-width:150px;padding:9px 12px;border-radius:10px;border:1.5px solid var(--border);font-family:'Poppins',sans-serif;font-size:13px;font-weight:600;background:#fff;color:var(--ink);cursor:pointer;appearance:auto;}
+.jurnal-toolbar select:focus{outline:none;border-color:var(--P);}
+.btn-print{padding:9px 16px;border-radius:10px;border:none;background:var(--P);color:#fff;font-family:'Poppins',sans-serif;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:background .15s;}
+.btn-print:hover{background:var(--Pd);}
+
 /* ── Empty ── */
 .empty{text-align:center;padding:2.5rem 1rem;color:var(--muted);}
 .empty .ei{font-size:36px;margin-bottom:8px;}.empty p{font-size:13px;font-weight:600;}
@@ -193,6 +200,12 @@ footer{text-align:center;padding:1.5rem;font-size:12px;color:var(--muted);font-w
 
     <!-- Tab: Jurnal Harian -->
     <div class="tab-content active" id="tab-jurnal">
+      <div class="jurnal-toolbar">
+        <select id="f-jurnal-month" onchange="filterJurnal()">
+          <option value="">Semua Bulan</option>
+        </select>
+        <button class="btn-print" onclick="printMonthlyJurnal()">📄 Cetak PDF</button>
+      </div>
       <div class="absen-summary" id="absen-summary"></div>
       <div id="daily-list"></div>
     </div>
@@ -224,7 +237,7 @@ footer{text-align:center;padding:1.5rem;font-size:12px;color:var(--muted);font-w
 /* ════════════════════════════════════════════
    CONFIG — isi API_URL setelah deploy GAS
    ════════════════════════════════════════════ */
-const API_URL = 'https://script.google.com/macros/s/AKfycbw_25fb7Xe9ctkFY6bkFCEU3LhY1bbZlH77hvhVXOEifVOVyLVoBqe1Pk3CIwT8O--Zow/exec';
+const API_URL = 'https://script.google.com/macros/s/AKfycbyVvwrl5-rVUHvDf4ZDCTUy7WtbUMqFHZDc99u5g9YmyqOR_Dhq7aIuooEfTMlOHOjXeA/exec';
 
 /* ── Helpers ── */
 const MN=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
@@ -249,7 +262,7 @@ function progBadge(p){
   return`<span class="prog-badge" style="background:${c.bg};color:${c.color}">${esc(p)}</span>`;
 }
 
-let student=null;
+let student=null, allSessions=[];
 
 /* ── Spinner ── */
 function showSpinner(){document.getElementById('global-spinner').style.display='flex';}
@@ -329,8 +342,9 @@ function renderPortal(data){
   if(s.note){noteEl.style.display='block';noteEl.textContent='📌 '+s.note;}
   else noteEl.style.display='none';
 
-  const sessions=(data.sessions||[]).map(x=>({...x,docs:Array.isArray(x.docs)?x.docs:[]}));
-  renderDaily(sessions);
+  allSessions=(data.sessions||[]).map(x=>({...x,docs:Array.isArray(x.docs)?x.docs:[]}));
+  buildMonthOptions(allSessions);
+  renderDaily(allSessions);
   renderMonthly(data.monthly||[]);
   renderInvoices(data.invoices||[]);
 }
@@ -383,6 +397,92 @@ function renderDaily(all){
       </div>
     </div>`;
   }).join('');
+}
+
+/* ── Jurnal filter & PDF ── */
+function buildMonthOptions(sessions){
+  const months=[...new Set(sessions.map(s=>s.date?s.date.slice(0,7):'').filter(Boolean))];
+  months.sort((a,b)=>b.localeCompare(a));
+  const sel=document.getElementById('f-jurnal-month');
+  if(!sel)return;
+  sel.innerHTML='<option value="">Semua Bulan</option>'+months.map(m=>`<option value="${m}">${fmtMY(m)}</option>`).join('');
+}
+function filterJurnal(){
+  const month=document.getElementById('f-jurnal-month')?.value||'';
+  renderDaily(month?allSessions.filter(s=>s.date&&s.date.startsWith(month)):allSessions);
+}
+function printMonthlyJurnal(){
+  const month=document.getElementById('f-jurnal-month')?.value||'';
+  let sess=month?allSessions.filter(s=>s.date&&s.date.startsWith(month)):allSessions;
+  sess=[...sess].sort((a,b)=>a.date.localeCompare(b.date));
+  const monthLabel=month?fmtMY(month):'Semua Bulan';
+  const sName=student?.name||'';
+  const sProg=student?.program||'';
+  const e2=s=>(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const hadir=sess.filter(s=>s.present).length;
+  const rows=sess.map((s,i)=>`<tr>
+    <td style="text-align:center">${i+1}</td>
+    <td>${fmtDS(s.date)}</td>
+    <td>${s.startTime&&s.endTime?s.startTime+'–'+s.endTime:(s.startTime||'—')}</td>
+    <td class="${s.present?'td-h':'td-a'}">${s.present?'✅ Hadir':'❌ Tidak'}</td>
+    <td>${e2(s.material||'—')}</td>
+    <td>${e2(s.homework||'—')}</td>
+    <td>${e2(s.note||'—')}</td>
+  </tr>`).join('');
+  const html=`<!DOCTYPE html><html lang="id"><head><meta charset="UTF-8">
+<title>Jurnal — ${e2(monthLabel)}</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Poppins',sans-serif;padding:28px;color:#3D1E1E;font-size:11px;}
+.hdr{border-bottom:2.5px solid #C85555;padding-bottom:12px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:flex-end;}
+.hdr-t{font-size:18px;font-weight:800;color:#C85555;}.hdr-s{font-size:11px;color:#8A6060;margin-top:2px;}
+.hdr-r{text-align:right;font-size:10px;color:#8A6060;}
+.info{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap;}
+.ib{background:#FFF5F0;border-radius:8px;padding:8px 14px;}
+.ib label{display:block;font-size:9px;font-weight:700;color:#8A6060;text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px;}
+.ib span{font-weight:800;font-size:12px;}
+.summ{display:flex;gap:8px;margin-bottom:14px;}
+.sb{border-radius:8px;padding:7px 14px;text-align:center;}
+.sb .n{font-size:18px;font-weight:800;}.sb .l{font-size:9px;color:#666;text-transform:uppercase;letter-spacing:.04em;}
+.s-all{background:#EAF6FC;}.s-had{background:#E8F5E9;}.s-abs{background:#FDEAEA;}
+.s-all .n{color:#3A7A9A;}.s-had .n{color:#2A8A3A;}.s-abs .n{color:#C85555;}
+table{width:100%;border-collapse:collapse;}
+th{background:#C85555;color:#fff;padding:7px 8px;text-align:left;font-size:10px;font-weight:700;}
+td{padding:5px 7px;border-bottom:1px solid #EDD8D0;vertical-align:top;line-height:1.4;}
+tr:nth-child(even) td{background:#FFF9F7;}
+.td-h{color:#2A8A3A;font-weight:700;}.td-a{color:#C85555;font-weight:700;}
+.ftr{margin-top:16px;font-size:9px;color:#8A6060;text-align:right;border-top:1px solid #EDD8D0;padding-top:8px;}
+@media print{body{padding:12px;}@page{margin:1.5cm;size:A4 landscape;}}
+</style></head><body>
+<div class="hdr">
+  <div><div class="hdr-t">Laisa Math Coaching</div><div class="hdr-s">Jurnal Harian Siswa — ${e2(monthLabel)}</div></div>
+  <div class="hdr-r">Dicetak: ${new Date().toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'})}</div>
+</div>
+<div class="info">
+  <div class="ib"><label>Nama Siswa</label><span>${e2(sName)}</span></div>
+  ${sProg?`<div class="ib"><label>Program</label><span>${e2(sProg)}</span></div>`:''}
+  <div class="ib"><label>Periode</label><span>${e2(monthLabel)}</span></div>
+</div>
+<div class="summ">
+  <div class="sb s-all"><div class="n">${sess.length}</div><div class="l">Total Sesi</div></div>
+  <div class="sb s-had"><div class="n">${hadir}</div><div class="l">Hadir</div></div>
+  <div class="sb s-abs"><div class="n">${sess.length-hadir}</div><div class="l">Tidak Hadir</div></div>
+</div>
+<table>
+  <thead><tr>
+    <th style="width:28px">#</th><th>Tanggal</th><th>Waktu</th><th>Status</th>
+    <th>Materi</th><th>PR / Tugas</th><th>Catatan Tutor</th>
+  </tr></thead>
+  <tbody>${rows||'<tr><td colspan="7" style="text-align:center;color:#8A6060;padding:14px">Belum ada sesi untuk periode ini</td></tr>'}</tbody>
+</table>
+<div class="ftr">Laisa Math Coaching · Dokumen ini dicetak otomatis dari sistem</div>
+<script>window.onload=function(){window.print();};<\/script>
+</body></html>`;
+  const w=window.open('','_blank');
+  if(!w){alert('Izinkan pop-up untuk mencetak PDF.');return;}
+  w.document.write(html);
+  w.document.close();
 }
 
 /* ── Progress Bulanan ── */
