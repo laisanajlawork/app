@@ -23,7 +23,8 @@ header{background:linear-gradient(135deg,var(--Pd) 0%,var(--P) 60%,#D96868 100%)
 header::before{content:'';position:absolute;top:-20px;right:-20px;width:130px;height:130px;background:rgba(234,166,36,.2);border-radius:50%;}
 header::after{content:'';position:absolute;bottom:-30px;left:35%;width:90px;height:90px;background:rgba(247,188,176,.15);border-radius:50%;}
 .h-inner{display:flex;align-items:center;gap:1rem;position:relative;z-index:1;}
-.h-logo{width:54px;height:54px;border-radius:14px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;box-shadow:0 2px 10px rgba(0,0,0,.18);}
+.h-logo{width:54px;height:54px;border-radius:14px;background:#fff;overflow:hidden;flex-shrink:0;box-shadow:0 2px 10px rgba(0,0,0,.18);}
+.h-logo img{width:100%;height:100%;object-fit:cover;display:block;}
 .h-label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.75);font-weight:600;margin-bottom:2px;}
 header h1{font-size:clamp(17px,4vw,22px);font-weight:800;color:#fff;letter-spacing:-.01em;}
 header h1 em{color:var(--Al);font-style:normal;}
@@ -162,7 +163,7 @@ main{max-width:780px;margin:0 auto;padding:1.5rem 1.25rem 5rem;}
 
 <header>
   <div class="h-inner">
-    <div class="h-logo">📐</div>
+    <div class="h-logo"><img src="logo.png" alt="Bimbel Nala" onerror="this.style.display='none';this.parentNode.style.cssText+='display:flex;align-items:center;justify-content:center;font-size:26px';this.parentNode.textContent='📐'"></div>
     <div>
       <div class="h-label">Dashboard Tutor</div>
       <h1>Bimbel <em>Nala</em></h1>
@@ -281,9 +282,15 @@ main{max-width:780px;margin:0 auto;padding:1.5rem 1.25rem 5rem;}
       <select class="form-select" id="mst-program">
         <option value="">-- Pilih Program --</option>
         <option value="Calistung">Calistung</option>
-        <option value="Matematika SD">Matematika SD</option>
-        <option value="Matematika SMP">Matematika SMP</option>
-        <option value="Matematika SMA">Matematika SMA</option>
+        <option value="Mtk SD (Semi Private)">Mtk SD (Semi Private)</option>
+        <option value="Mtk SD (Private 60 Menit)">Mtk SD (Private 60 Menit)</option>
+        <option value="Mtk SD (Private 90 Menit)">Mtk SD (Private 90 Menit)</option>
+        <option value="Mtk SMP (Semi Private)">Mtk SMP (Semi Private)</option>
+        <option value="Mtk SMP (Private 60 Menit)">Mtk SMP (Private 60 Menit)</option>
+        <option value="Mtk SMP (Private 90 Menit)">Mtk SMP (Private 90 Menit)</option>
+        <option value="Mtk SMA (Semi Private)">Mtk SMA (Semi Private)</option>
+        <option value="Mtk SMA (Private 60 Menit)">Mtk SMA (Private 60 Menit)</option>
+        <option value="Mtk SMA (Private 90 Menit)">Mtk SMA (Private 90 Menit)</option>
       </select>
     </div>
     <div class="form-row">
@@ -463,10 +470,16 @@ const uid=()=>Math.random().toString(36).slice(2,9)+Date.now().toString(36).slic
 
 /* ── Program badge ── */
 const PROG_STYLE={
-  'Calistung':      {bg:'#F0F2E0',color:'#5A5F28'},
-  'Matematika SD':  {bg:'#EAF6FC',color:'#3A7A9A'},
-  'Matematika SMP': {bg:'#FEF7E0',color:'#9A6A00'},
-  'Matematika SMA': {bg:'#FDEAEA',color:'#A83E3E'},
+  'Calistung':               {bg:'#F0F2E0',color:'#5A5F28'},
+  'Mtk SD (Semi Private)':   {bg:'#EAF6FC',color:'#3A7A9A'},
+  'Mtk SD (Private 60 Menit)':{bg:'#D6EEF8',color:'#2A6A8A'},
+  'Mtk SD (Private 90 Menit)':{bg:'#C2E4F4',color:'#1A5A7A'},
+  'Mtk SMP (Semi Private)':  {bg:'#FEF7E0',color:'#9A6A00'},
+  'Mtk SMP (Private 60 Menit)':{bg:'#FEF0C0',color:'#8A5A00'},
+  'Mtk SMP (Private 90 Menit)':{bg:'#FDE8A0',color:'#7A4A00'},
+  'Mtk SMA (Semi Private)':  {bg:'#FDEAEA',color:'#A83E3E'},
+  'Mtk SMA (Private 60 Menit)':{bg:'#FADDDD',color:'#982E2E'},
+  'Mtk SMA (Private 90 Menit)':{bg:'#F7CECE',color:'#881E1E'},
 };
 function progBadge(p){
   if(!p)return'';
@@ -925,100 +938,4 @@ function renderInvoices(){
       ${mBadge}
       <div class="inv-dates">Jatuh Tempo: ${fmtDS(inv.dueDate)}${inv.paidDate?' &nbsp;·&nbsp; Dibayar: '+fmtDS(inv.paidDate):''}</div>
       ${!paid?`<div class="bni-box">🏦 Transfer ke <strong>BNI</strong> · No. Rek <strong>0673690383</strong> · a.n. <strong>Najlarafah Is Laisa</strong></div>`:''}
-      <div class="inv-actions">
-        ${!paid?`<button class="btn btn-green btn-sm" onclick="markPaid('${inv.id}')">✅ Tandai Lunas</button>`
-               :`<button class="btn btn-ghost btn-sm" onclick="markUnpaid('${inv.id}')">↩️ Batalkan</button>`}
-        <button class="btn btn-ghost btn-sm" onclick="openInvoiceModal('${inv.id}')">✏️ Edit</button>
-        <button class="btn btn-danger btn-sm" onclick="deleteInvoice('${inv.id}')">🗑️</button>
-      </div>
-    </div>`;
-  }).join('');
-}
-
-function togglePaidDate(){document.getElementById('minv-paid-group').style.display=document.getElementById('minv-status').value==='lunas'?'block':'none';}
-function togglePaymentInfo(){document.getElementById('minv-bni-info').style.display=document.getElementById('minv-method').value==='transfer'?'block':'none';}
-
-function openInvoiceModal(id='',presetLunas=false){
-  const inv=id?DB.inv().find(x=>x.id===id):null;
-  const now=new Date();
-  document.getElementById('minv-title').textContent  =inv?'Edit Tagihan':'Tambah Tagihan';
-  document.getElementById('minv-id').value           =inv?.id         ||'';
-  document.getElementById('minv-my').value           =inv?.monthYear  ||`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;
-  document.getElementById('minv-amount').value       =inv?.amount     ||'';
-  document.getElementById('minv-due').value          =inv?.dueDate    ||'';
-  document.getElementById('minv-method').value       =inv?.paymentMethod||'';
-  const status=presetLunas?'lunas':(inv?.status||'belum');
-  document.getElementById('minv-status').value       =status;
-  document.getElementById('minv-paiddate').value     =presetLunas?now.toISOString().slice(0,10):(inv?.paidDate||'');
-  togglePaidDate();
-  togglePaymentInfo();
-  fillStudentDD('minv-student',inv?.studentId||'');
-  openModal('modal-invoice');
-}
-
-function markPaid(id){openInvoiceModal(id,true);}
-
-async function markUnpaid(id){
-  const i=S.invoices.findIndex(x=>x.id===id);if(i<0)return;
-  const data={...S.invoices[i],status:'belum',paidDate:'',paymentMethod:''};
-  if(API_URL){showSpinner();await apiPost('save_invoice',data);hideSpinner();}
-  S.invoices[i]=data;
-  if(!API_URL)syncLocal();
-  renderInvoices();renderInvoiceSummary();
-}
-
-async function saveInvoice(){
-  const studentId=document.getElementById('minv-student').value;
-  const monthYear=document.getElementById('minv-my').value;
-  if(!studentId||!monthYear){alert('Pilih siswa dan bulan!');return;}
-  const id=document.getElementById('minv-id').value;
-  const status=document.getElementById('minv-status').value;
-  const data={
-    id,studentId,monthYear,
-    amount:        document.getElementById('minv-amount').value,
-    dueDate:       document.getElementById('minv-due').value,
-    status,
-    paidDate:      status==='lunas'?document.getElementById('minv-paiddate').value:'',
-    paymentMethod: document.getElementById('minv-method').value,
-  };
-  if(API_URL){showSpinner();const res=await apiPost('save_invoice',data);hideSpinner();if(res.error){alert('Gagal menyimpan: '+res.error);return;}data.id=res.id;}
-  if(id){const i=S.invoices.findIndex(x=>x.id===id);if(i>=0)S.invoices[i]={...S.invoices[i],...data};}
-  else S.invoices.push({...data,id:data.id||uid()});
-  if(!API_URL)syncLocal();
-  closeModal('modal-invoice');
-  renderInvoices();renderInvoiceSummary();
-}
-
-async function deleteInvoice(id){
-  if(!confirm('Hapus tagihan ini?'))return;
-  if(API_URL){showSpinner();await apiPost('delete_invoice',{id});hideSpinner();}
-  S.invoices=S.invoices.filter(i=>i.id!==id);
-  if(!API_URL)syncLocal();
-  renderInvoices();renderInvoiceSummary();
-}
-
-/* ── Init ── */
-(async function(){
-  if(API_URL){
-    showSpinner();
-    try{
-      const d=await apiFetch('get_admin');
-      // Normalise: pastikan docs selalu array
-      const sessions=(d.sessions||[]).map(s=>({...s,docs:Array.isArray(s.docs)?s.docs:[]}));
-      S={students:d.students||[],sessions,monthly:d.monthly||[],invoices:d.invoices||[]};
-    }catch(e){alert('Gagal memuat data: '+e.message);}
-    hideSpinner();
-  } else {
-    S={
-      students:lsGet('lm_s'),
-      sessions:(lsGet('lm_ses')).map(s=>({...s,docs:Array.isArray(s.docs)?s.docs:[]})),
-      monthly: lsGet('lm_mon'),
-      invoices:lsGet('lm_inv'),
-    };
-    if(!S.students.length)initSample();
-  }
-  renderStudents();
-})();
-</script>
-</body>
-</html>
+ 

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Laisa Math Coaching — Portal Orang Tua</title>
+<title>Bimbel Nala — Portal Orang Tua</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -23,7 +23,8 @@ header{background:linear-gradient(135deg,var(--Pd) 0%,var(--P) 60%,#D96868 100%)
 header::before{content:'';position:absolute;top:-20px;right:-20px;width:130px;height:130px;background:rgba(234,166,36,.2);border-radius:50%;}
 header::after{content:'';position:absolute;bottom:-30px;left:35%;width:90px;height:90px;background:rgba(247,188,176,.15);border-radius:50%;}
 .h-inner{display:flex;align-items:center;gap:1rem;position:relative;z-index:1;}
-.h-logo{width:54px;height:54px;border-radius:14px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;box-shadow:0 2px 10px rgba(0,0,0,.18);}
+.h-logo{width:54px;height:54px;border-radius:14px;background:#fff;overflow:hidden;flex-shrink:0;box-shadow:0 2px 10px rgba(0,0,0,.18);}
+.h-logo img{width:100%;height:100%;object-fit:cover;display:block;}
 .h-label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.75);font-weight:600;margin-bottom:2px;}
 header h1{font-size:clamp(17px,4vw,22px);font-weight:800;color:#fff;letter-spacing:-.01em;}
 header h1 em{color:var(--Al);font-style:normal;}
@@ -83,6 +84,8 @@ main{max-width:700px;margin:0 auto;padding:1.5rem 1.25rem 4rem;}
 .rfield-val{font-size:13px;line-height:1.6;white-space:pre-wrap;}
 .badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:6px;font-size:11px;font-weight:700;flex-shrink:0;}
 .badge-hadir{background:var(--Bl);color:var(--Bd);}.badge-absent{background:var(--Ml);color:var(--Md);}
+.badge-ctr{display:inline-flex;align-items:center;padding:2px 8px;border-radius:6px;font-size:10px;font-weight:700;background:#F0F2E0;color:#5A5F28;white-space:nowrap;}
+.badge-ctr-over{display:inline-flex;align-items:center;padding:2px 8px;border-radius:6px;font-size:10px;font-weight:700;background:#FEF0E0;color:#B05A10;white-space:nowrap;}
 .doc-thumbs{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;}
 .doc-thumbs img{width:72px;height:72px;object-fit:cover;border-radius:8px;border:1.5px solid var(--border);cursor:pointer;}
 
@@ -136,10 +139,10 @@ footer{text-align:center;padding:1.5rem;font-size:12px;color:var(--muted);font-w
 
 <header>
   <div class="h-inner">
-    <div class="h-logo">📐</div>
+    <div class="h-logo"><img src="logo.png" alt="Bimbel Nala" onerror="this.style.display='none';this.parentNode.style.cssText+='display:flex;align-items:center;justify-content:center;font-size:26px';this.parentNode.textContent='📐'"></div>
     <div style="flex:1">
       <div class="h-label">Portal Orang Tua</div>
-      <h1>Laisa <em>Math</em> Coaching</h1>
+      <h1>Bimbel <em>Nala</em></h1>
       <p id="header-sub">Pantau perkembangan belajar anak Anda ✨</p>
     </div>
     <button class="logout-btn" id="logout-btn" onclick="logout()" style="display:none">Keluar</button>
@@ -224,7 +227,7 @@ footer{text-align:center;padding:1.5rem;font-size:12px;color:var(--muted);font-w
 
 </main>
 
-<footer>Laisa Math Coaching ✨ — Portal Orang Tua</footer>
+<footer>Bimbel Nala ✨ — Portal Orang Tua</footer>
 
 <!-- ══ Global Spinner ══ -->
 <div id="global-spinner" style="display:none;position:fixed;inset:0;background:rgba(253,234,234,.85);z-index:9999;align-items:center;justify-content:center;flex-direction:column;gap:12px">
@@ -241,20 +244,27 @@ const API_URL = 'https://script.google.com/macros/s/AKfycbyVvwrl5-rVUHvDf4ZDCTUy
 
 /* ── Helpers ── */
 const MN=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+const fmtTime=t=>{if(!t)return'';const s=String(t);if(s.includes('1899')||s.includes('GMT')){const d=new Date(s);return isNaN(d)?s:d.toTimeString().slice(0,5);}return s.slice(0,5);};
 const lsGet=k=>{try{return JSON.parse(localStorage.getItem(k)||'[]')}catch{return[]}};
 const esc=s=>(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 const fmt=n=>(Number(n)||0).toLocaleString('id-ID');
 const ini=n=>(n||'?').split(' ').slice(0,2).map(w=>w[0]||'').join('').toUpperCase();
-const fmtMY=ym=>{if(!ym)return'—';const[y,m]=ym.split('-');return`${MN[parseInt(m)-1]} ${y}`};
+const fmtMY=ym=>{if(!ym)return'—';const s=String(ym);if(s.length>7){const d=new Date(s);if(!isNaN(d))return`${MN[d.getMonth()]} ${d.getFullYear()}`;}const[y,m]=s.split('-');return`${MN[parseInt(m)-1]||'?'} ${y||'?'}`;};
 const fmtDS=d=>{if(!d)return'—';return new Date(d+'T00:00:00').toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'})};
 const fmtDL=d=>{if(!d)return'—';return new Date(d+'T00:00:00').toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'})};
 
 /* ── Program badge ── */
 const PROG_STYLE={
-  'Calistung':      {bg:'#F0F2E0',color:'#5A5F28'},
-  'Matematika SD':  {bg:'#EAF6FC',color:'#3A7A9A'},
-  'Matematika SMP': {bg:'#FEF7E0',color:'#9A6A00'},
-  'Matematika SMA': {bg:'#FDEAEA',color:'#A83E3E'},
+  'Calistung':               {bg:'#F0F2E0',color:'#5A5F28'},
+  'Mtk SD (Semi Private)':   {bg:'#EAF6FC',color:'#3A7A9A'},
+  'Mtk SD (Private 60 Menit)':{bg:'#D6EEF8',color:'#2A6A8A'},
+  'Mtk SD (Private 90 Menit)':{bg:'#C2E4F4',color:'#1A5A7A'},
+  'Mtk SMP (Semi Private)':  {bg:'#FEF7E0',color:'#9A6A00'},
+  'Mtk SMP (Private 60 Menit)':{bg:'#FEF0C0',color:'#8A5A00'},
+  'Mtk SMP (Private 90 Menit)':{bg:'#FDE8A0',color:'#7A4A00'},
+  'Mtk SMA (Semi Private)':  {bg:'#FDEAEA',color:'#A83E3E'},
+  'Mtk SMA (Private 60 Menit)':{bg:'#FADDDD',color:'#982E2E'},
+  'Mtk SMA (Private 90 Menit)':{bg:'#F7CECE',color:'#881E1E'},
 };
 function progBadge(p){
   if(!p)return'';
@@ -359,8 +369,24 @@ function showTab(name){
 }
 function toggleCard(id){document.getElementById(id)?.classList.toggle('open');}
 
+/* ── Session counters (per bulan) ── */
+function buildOrtCounters(sessions){
+  const groups={};
+  sessions.forEach(s=>{
+    const ym=(s.date||'').slice(0,7);
+    if(!groups[ym])groups[ym]=[];
+    groups[ym].push(s);
+  });
+  Object.values(groups).forEach(g=>g.sort((a,b)=>a.date.localeCompare(b.date)));
+  const map={};
+  Object.values(groups).forEach(g=>g.forEach((s,i)=>{map[s.id]={n:i+1,total:g.length};}));
+  return map;
+}
+
 /* ── Daily / Jurnal ── */
 function renderDaily(all){
+  const ctrs=buildOrtCounters(allSessions);
+  const agreed=student?.totalSessions||0;
   all=[...all].sort((a,b)=>b.date.localeCompare(a.date));
   const h=all.filter(s=>s.present).length;
   document.getElementById('absen-summary').innerHTML=`
@@ -370,15 +396,20 @@ function renderDaily(all){
   const list=document.getElementById('daily-list');
   if(!all.length){list.innerHTML='<div class="empty"><div class="ei">📭</div><p>Belum ada jurnal sesi</p></div>';return;}
   list.innerHTML=all.map((s,i)=>{
-    const timeStr=(s.startTime||s.endTime)?` · ${s.startTime||'?'}–${s.endTime||'?'}`:'';
+    const t1=fmtTime(s.startTime),t2=fmtTime(s.endTime);
+    const timeStr=(t1||t2)?` · ${t1||'?'}–${t2||'?'}`:'';
     const prevText=s.present?(s.material||s.note||'—'):'Tidak hadir';
     const hasDocs=s.docs&&s.docs.length>0;
+    const ctr=ctrs[s.id]||{n:'?'};
+    const isOver=agreed>0&&ctr.n>agreed;
+    const ctrLabel=agreed?`Pertemuan ke-${ctr.n} / ${agreed} disepakati`:`Pertemuan ke-${ctr.n} bulan ini`;
     return`<div class="report-card" id="rc-${i}">
       <div class="rep-head" onclick="toggleCard('rc-${i}')">
         <div style="flex:1">
           <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
             <div class="rep-date">${fmtDS(s.date)}${timeStr}</div>
             <span class="badge badge-${s.present?'hadir':'absent'}">${s.present?'✅ Hadir':'❌ Tidak Hadir'}</span>
+            <span class="badge-ctr${isOver?'-over':''}">${ctrLabel}${isOver?' ⚠️':''}</span>
             ${hasDocs?`<span style="font-size:11px;color:var(--muted)">📷 ${s.docs.length}</span>`:''}
           </div>
           <div class="rep-prev">${(prevText||'').slice(0,55)}${prevText.length>55?'…':''}</div>
@@ -415,6 +446,7 @@ function printMonthlyJurnal(){
   const month=document.getElementById('f-jurnal-month')?.value||'';
   let sess=month?allSessions.filter(s=>s.date&&s.date.startsWith(month)):allSessions;
   sess=[...sess].sort((a,b)=>a.date.localeCompare(b.date));
+  if(month&&student?.totalSessions>0) sess=sess.slice(0,student.totalSessions);
   const monthLabel=month?fmtMY(month):'Semua Bulan';
   const sName=student?.name||'';
   const sProg=student?.program||'';
@@ -456,7 +488,7 @@ tr:nth-child(even) td{background:#FFF9F7;}
 @media print{body{padding:12px;}@page{margin:1.5cm;size:A4 landscape;}}
 </style></head><body>
 <div class="hdr">
-  <div><div class="hdr-t">Laisa Math Coaching</div><div class="hdr-s">Jurnal Harian Siswa — ${e2(monthLabel)}</div></div>
+  <div><div class="hdr-t">Bimbel Nala</div><div class="hdr-s">Jurnal Harian Siswa — ${e2(monthLabel)}</div></div>
   <div class="hdr-r">Dicetak: ${new Date().toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'})}</div>
 </div>
 <div class="info">
@@ -476,7 +508,7 @@ tr:nth-child(even) td{background:#FFF9F7;}
   </tr></thead>
   <tbody>${rows||'<tr><td colspan="7" style="text-align:center;color:#8A6060;padding:14px">Belum ada sesi untuk periode ini</td></tr>'}</tbody>
 </table>
-<div class="ftr">Laisa Math Coaching · Dokumen ini dicetak otomatis dari sistem</div>
+<div class="ftr">Bimbel Nala · Dokumen ini dicetak otomatis dari sistem</div>
 <script>window.onload=function(){window.print();};<\/script>
 </body></html>`;
   const w=window.open('','_blank');
@@ -515,15 +547,15 @@ function renderInvoices(all){
       </div>
       <div class="inv-amount">Rp ${fmt(inv.amount)}</div>
       ${mBadge}
-      <div class="inv-dates">Jatuh Tempo: ${fmtDS(inv.dueDate)}${inv.paidDate?' &nbsp;·&nbsp; Dibayar: '+fmtDS(inv.paidDate):''}</div>
+      <div class="inv-dates">Jatuh Tempo: ${fmtDS(inv.dueDate)}${inv.paidDate?' · Dibayar: '+fmtDS(inv.paidDate):''}</div>
+      ${!paid?`<div class="bank-box">
+        <strong>🏦 Pembayaran via Transfer Bank</strong><br>
+        Bank BNI &nbsp;·&nbsp; No. Rek: <strong>0673690383</strong><br>
+        a.n. <strong>Najlarafah Is Laisa</strong><br>
+        <span style="font-size:11px;opacity:.8">Konfirmasi pembayaran kepada tutor setelah transfer.</span>
+      </div>`:''}
     </div>`;
-  }).join('')+(hasUnpaid?`
-    <div class="bank-box">
-      🏦 <strong>Pembayaran via Transfer Bank</strong><br>
-      Bank BNI &nbsp;·&nbsp; No. Rek: <strong>0673690383</strong><br>
-      a.n. <strong>Najlarafah Is Laisa</strong><br>
-      <span style="font-size:11.5px;color:#5A8AAA">Konfirmasi pembayaran kepada tutor setelah transfer.</span>
-    </div>`:'');
+  }).join('');
 }
 
 /* ── Auto-login dari sesi tersimpan ── */
