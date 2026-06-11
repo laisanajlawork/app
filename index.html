@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Laisa Math Coaching — Admin</title>
+<title>Bimbel Nala — Admin</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -96,6 +96,8 @@ main{max-width:780px;margin:0 auto;padding:1.5rem 1.25rem 5rem;}
 .si-actions{display:flex;gap:6px;margin-top:10px;padding-top:10px;border-top:1.5px solid var(--cream);}
 .badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:6px;font-size:11px;font-weight:700;flex-shrink:0;}
 .badge-hadir{background:var(--Bl);color:var(--Bd);}.badge-absent{background:var(--Ml);color:var(--Md);}
+.badge-ctr{display:inline-flex;align-items:center;padding:2px 8px;border-radius:6px;font-size:10px;font-weight:700;background:#F0F2E0;color:#5A5F28;white-space:nowrap;}
+.badge-ctr-over{display:inline-flex;align-items:center;padding:2px 8px;border-radius:6px;font-size:10px;font-weight:700;background:#FEF0E0;color:#B05A10;white-space:nowrap;}
 .doc-thumbs{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;}
 .doc-thumbs img{width:76px;height:76px;object-fit:cover;border-radius:8px;border:1.5px solid var(--border);cursor:pointer;}
 
@@ -163,7 +165,7 @@ main{max-width:780px;margin:0 auto;padding:1.5rem 1.25rem 5rem;}
     <div class="h-logo">📐</div>
     <div>
       <div class="h-label">Dashboard Tutor</div>
-      <h1>Laisa <em>Math</em> Coaching</h1>
+      <h1>Bimbel <em>Nala</em></h1>
       <p>Kelola siswa, sesi, dan laporan dengan mudah ✨</p>
     </div>
   </div>
@@ -285,11 +287,35 @@ main{max-width:780px;margin:0 auto;padding:1.5rem 1.25rem 5rem;}
       </select>
     </div>
     <div class="form-row">
-      <div class="form-group"><label>Kelas / Grade</label><input type="text" class="form-input" id="mst-grade" placeholder="mis. Kelas 7"></div>
+      <div class="form-group"><label>Kelas</label><input type="text" class="form-input" id="mst-grade" placeholder="mis. Kelas 7"></div>
       <div class="form-group"><label>Sekolah</label><input type="text" class="form-input" id="mst-school" placeholder="Nama sekolah"></div>
     </div>
     <div class="form-row">
       <div class="form-group"><label>Tanggal Mulai</label><input type="date" class="form-input" id="mst-start"></div>
+      <div class="form-group"><label>Jml Pertemuan / Bulan</label><select class="form-select" id="mst-total"><option value="">-- Pilih --</option><option value="8">8x / bulan</option><option value="12">12x / bulan</option></select></div>
+    </div>
+    <div class="form-group">
+      <label>Hari &amp; Jam Les (1)</label>
+      <div class="form-row" style="margin-bottom:0">
+        <select class="form-select" id="mst-day1"><option value="">-- Hari --</option><option>Senin</option><option>Selasa</option><option>Rabu</option><option>Kamis</option><option>Jumat</option><option>Sabtu</option><option>Minggu</option></select>
+        <input type="time" class="form-input" id="mst-time1">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Hari &amp; Jam Les (2) <span style="font-weight:400;color:var(--muted)">— opsional</span></label>
+      <div class="form-row" style="margin-bottom:0">
+        <select class="form-select" id="mst-day2"><option value="">-- Hari --</option><option>Senin</option><option>Selasa</option><option>Rabu</option><option>Kamis</option><option>Jumat</option><option>Sabtu</option><option>Minggu</option></select>
+        <input type="time" class="form-input" id="mst-time2">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Hari &amp; Jam Les (3) <span style="font-weight:400;color:var(--muted)">— opsional</span></label>
+      <div class="form-row" style="margin-bottom:0">
+        <select class="form-select" id="mst-day3"><option value="">-- Hari --</option><option>Senin</option><option>Selasa</option><option>Rabu</option><option>Kamis</option><option>Jumat</option><option>Sabtu</option><option>Minggu</option></select>
+        <input type="time" class="form-input" id="mst-time3">
+      </div>
+    </div>
+    <div class="form-row">
       <div class="form-group"><label>Catatan</label><input type="text" class="form-input" id="mst-note" placeholder="mis. Fokus aljabar"></div>
     </div>
     <div class="form-row">
@@ -429,6 +455,8 @@ const fmt=n=>(Number(n)||0).toLocaleString('id-ID');
 const ini=n=>(n||'?').split(' ').slice(0,2).map(w=>w[0]||'').join('').toUpperCase();
 const fmtMY=ym=>{if(!ym)return'—';const[y,m]=ym.split('-');return`${MN[parseInt(m)-1]} ${y}`};
 const fmtDS=d=>{if(!d)return'—';return new Date(d+'T00:00:00').toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'})};
+/* Fix time values that come back as full Date strings (Sheets time → "HH:mm") */
+const fmtTime=t=>{if(!t)return'';const s=String(t);if(s.includes('1899')||s.includes('GMT')){const d=new Date(s);return isNaN(d)?s:d.toTimeString().slice(0,5);}return s.slice(0,5);};
 const genUser=n=>'ortu_'+(n||'siswa').toLowerCase().replace(/\s+/g,'').slice(0,8);
 const genPin=()=>String(Math.floor(1000+Math.random()*9000));
 const uid=()=>Math.random().toString(36).slice(2,9)+Date.now().toString(36).slice(-4);
@@ -600,8 +628,10 @@ function renderStudents(){
         <div class="sc-avatar">${ini(s.name)}</div>
         <div><div class="sc-name">${esc(s.name)}</div><div class="sc-sub">${esc(s.grade||'—')} · ${esc(s.school||'—')}</div></div>
       </div>
-      ${s.program?`<div>${progBadge(s.program)}</div>`:''}
+      ${s.program?`<div style="margin-bottom:6px">${progBadge(s.program)}</div>`:''}
       <div class="sc-row">📅 Mulai: <span>${fmtDS(s.startDate)}</span></div>
+      ${s.totalSessions?`<div class="sc-row">🎯 <span>${s.totalSessions}x pertemuan/bulan</span></div>`:''}
+      ${s.schedule1?`<div class="sc-row">🗓️ <span>${esc(s.schedule1)}${s.schedule2?' · '+esc(s.schedule2):''}${s.schedule3?' · '+esc(s.schedule3):''}</span></div>`:''}
       ${s.note?`<div class="sc-row">📌 <span>${esc(s.note)}</span></div>`:''}
       <div class="cred-box">🔑 Username: <strong>${esc(s.username)}</strong> &nbsp;|&nbsp; PIN: <strong>${esc(s.pin)}</strong></div>
     </div>`).join('');
@@ -611,14 +641,24 @@ function openStudentModal(id=''){
   const s=id?DB.s().find(x=>x.id===id):null;
   document.getElementById('mst-title').textContent  =s?'Edit Siswa':'Tambah Siswa';
   document.getElementById('mst-id').value           =s?.id       ||'';
-  document.getElementById('mst-name').value         =s?.name     ||'';
-  document.getElementById('mst-program').value      =s?.program  ||'';
-  document.getElementById('mst-grade').value        =s?.grade    ||'';
-  document.getElementById('mst-school').value       =s?.school   ||'';
-  document.getElementById('mst-start').value        =s?.startDate||'';
-  document.getElementById('mst-user').value         =s?.username ||'';
-  document.getElementById('mst-pin').value          =s?.pin      ||'';
-  document.getElementById('mst-note').value         =s?.note     ||'';
+  document.getElementById('mst-name').value         =s?.name          ||'';
+  document.getElementById('mst-program').value      =s?.program       ||'';
+  document.getElementById('mst-grade').value        =s?.grade         ||'';
+  document.getElementById('mst-school').value       =s?.school        ||'';
+  document.getElementById('mst-start').value        =s?.startDate     ||'';
+  document.getElementById('mst-total').value        =s?.totalSessions ||'';
+  document.getElementById('mst-user').value         =s?.username      ||'';
+  document.getElementById('mst-pin').value          =s?.pin           ||'';
+  document.getElementById('mst-note').value         =s?.note          ||'';
+  // Jadwal les — parse "Hari HH:mm"
+  const parseSchedule=(str,dayId,timeId)=>{
+    const parts=(str||'').split(' ');
+    document.getElementById(dayId).value =parts[0]||'';
+    document.getElementById(timeId).value=parts[1]||'';
+  };
+  parseSchedule(s?.schedule1,'mst-day1','mst-time1');
+  parseSchedule(s?.schedule2,'mst-day2','mst-time2');
+  parseSchedule(s?.schedule3,'mst-day3','mst-time3');
   openModal('modal-student');
 }
 
@@ -632,6 +672,10 @@ async function saveStudent(){
     grade:    document.getElementById('mst-grade').value.trim(),
     school:   document.getElementById('mst-school').value.trim(),
     startDate:document.getElementById('mst-start').value,
+    totalSessions: parseInt(document.getElementById('mst-total').value)||0,
+    schedule1: [document.getElementById('mst-day1').value, document.getElementById('mst-time1').value].filter(Boolean).join(' '),
+    schedule2: [document.getElementById('mst-day2').value, document.getElementById('mst-time2').value].filter(Boolean).join(' '),
+    schedule3: [document.getElementById('mst-day3').value, document.getElementById('mst-time3').value].filter(Boolean).join(' '),
     username: document.getElementById('mst-user').value.trim()||genUser(name),
     pin:      document.getElementById('mst-pin').value.trim()||genPin(),
     note:     document.getElementById('mst-note').value.trim(),
@@ -651,6 +695,20 @@ async function saveStudent(){
 }
 
 /* ════ SESSIONS / JURNAL ════ */
+/** Hitung urutan pertemuan per siswa per bulan → { sessionId: { n, total } } */
+function buildSessionCounters(all){
+  const groups={};
+  all.forEach(s=>{
+    const key=`${s.studentId}__${(s.date||'').slice(0,7)}`;
+    if(!groups[key])groups[key]=[];
+    groups[key].push(s);
+  });
+  Object.values(groups).forEach(g=>g.sort((a,b)=>a.date.localeCompare(b.date)));
+  const map={};
+  Object.values(groups).forEach(g=>{g.forEach((s,i)=>{map[s.id]={n:i+1,total:g.length};});});
+  return map;
+}
+
 function renderSessionSummary(){
   const arr=DB.ses();
   const h=arr.filter(s=>s.present).length;
@@ -669,18 +727,25 @@ function renderSessions(){
   if(fMo)arr=arr.filter(s=>s.date.startsWith(fMo));
   arr.sort((a,b)=>b.date.localeCompare(a.date));
   const students=DB.s();
+  const counters=buildSessionCounters(DB.ses()); // gunakan semua sesi untuk urutan yang akurat
   const list=document.getElementById('session-list');
   if(!arr.length){list.innerHTML='<div class="empty"><div class="ei">📭</div><p>Belum ada jurnal sesi</p></div>';return;}
   list.innerHTML=arr.map(s=>{
     const st=students.find(x=>x.id===s.studentId);
-    const timeStr=(s.startTime||s.endTime)?` · ${s.startTime||'?'} – ${s.endTime||'?'}`:'';
+    const t1=fmtTime(s.startTime),t2=fmtTime(s.endTime);
+    const timeStr=(t1||t2)?` · ${t1||'?'} – ${t2||'?'}`:'';
     const hasDocs=s.docs&&s.docs.length>0;
+    const ctr=counters[s.id]||{n:'?',total:'?'};
+    const agreed=st?.totalSessions||0;
+    const isOver=agreed>0&&ctr.n>agreed;
+    const ctrLabel=agreed?`Pertemuan ke-${ctr.n} / ${agreed} disepakati`:`Pertemuan ke-${ctr.n} bulan ini`;
     return`<div class="session-item" id="si-${s.id}">
       <div class="si-head" onclick="toggleSI('${s.id}')">
         <div style="flex:1">
           <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
             <div class="si-date">${fmtDS(s.date)}${timeStr}</div>
             <span class="badge badge-${s.present?'hadir':'absent'}">${s.present?'✅ Hadir':'❌ Tidak Hadir'}</span>
+            <span class="${isOver?'badge-ctr-over':'badge-ctr'}">${ctrLabel}${isOver?' ⚠️':''}</span>
             ${hasDocs?`<span style="font-size:11px;color:var(--muted)">📷 ${s.docs.length}</span>`:''}
           </div>
           <div class="si-student">${esc(st?.name||'—')}</div>
