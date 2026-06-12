@@ -938,4 +938,87 @@ function renderInvoices(){
       ${mBadge}
       <div class="inv-dates">Jatuh Tempo: ${fmtDS(inv.dueDate)}${inv.paidDate?' &nbsp;·&nbsp; Dibayar: '+fmtDS(inv.paidDate):''}</div>
       ${!paid?`<div class="bni-box">🏦 Transfer ke <strong>BNI</strong> · No. Rek <strong>0673690383</strong> · a.n. <strong>Najlarafah Is Laisa</strong></div>`:''}
- 
+    </div>`;
+  }).join('');
+}
+
+function openInvoiceModal(id=''){
+  document.getElementById('minv-title').textContent=id?'Edit Tagihan':'Tambah Tagihan';
+  document.getElementById('minv-id').value=id;
+  fillStudentDD('minv-student');
+  const inv=id?DB.inv().find(i=>i.id===id):null;
+  document.getElementById('minv-student').value =inv?.studentId||'';
+  document.getElementById('minv-my').value      =inv?.monthYear||`${new Date().getFullYear()}-${String(new Date().getMonth()+1).padStart(2,'0')}`;
+  document.getElementById('minv-amount').value  =inv?.amount||'';
+  document.getElementById('minv-due').value     =inv?.dueDate||'';
+  document.getElementById('minv-method').value  =inv?.paymentMethod||'';
+  document.getElementById('minv-status').value  =inv?.status||'belum';
+  document.getElementById('minv-paiddate').value=inv?.paidDate||'';
+  togglePaidDate();togglePaymentInfo();
+  openModal('modal-invoice');
+}
+function togglePaidDate(){
+  const v=document.getElementById('minv-status').value==='lunas';
+  document.getElementById('minv-paid-group').style.display=v?'block':'none';
+}
+function togglePaymentInfo(){
+  const v=document.getElementById('minv-method').value==='transfer';
+  document.getElementById('minv-bni-info').style.display=v?'block':'none';
+}
+async function saveInvoice(){
+  const id=document.getElementById('minv-id').value;
+  const studentId=document.getElementById('minv-student').value;
+  const monthYear=document.getElementById('minv-my').value;
+  if(!studentId||!monthYear){alert('Pilih siswa dan bulan!');return;}
+  const data={id,studentId,monthYear,
+    amount:  Number(document.getElementById('minv-amount').value)||0,
+    dueDate: document.getElementById('minv-due').value,
+    status:  document.getElementById('minv-status').value,
+    paidDate:document.getElementById('minv-paiddate').value,
+    paymentMethod:document.getElementById('minv-method').value,
+  };
+  if(API_URL){
+    showSpinner();
+    const res=await apiPost('save_invoice',data);
+    hideSpinner();
+    if(res.error){alert('Gagal menyimpan: '+res.error);return;}
+    data.id=res.id;
+  }
+  if(id){const i=S.invoices.findIndex(x=>x.id===id);if(i>=0)S.invoices[i]={...S.invoices[i],...data};}
+  else S.invoices.push({...data,id:data.id||uid()});
+  if(!API_URL)syncLocal();
+  closeModal('modal-invoice');
+  renderInvoices();renderInvoiceSummary();
+}
+async function deleteInvoice(id){
+  if(!confirm('Hapus tagihan ini?'))return;
+  if(API_URL){showSpinner();await apiPost('delete_invoice',{id});hideSpinner();}
+  S.invoices=S.invoices.filter(i=>i.id!==id);
+  if(!API_URL)syncLocal();
+  renderInvoices();renderInvoiceSummary();
+}
+
+/* ── Init ── */
+(async function(){
+  if(API_URL){
+    showSpinner();
+    try{
+      const d=await apiFetch('get_admin');
+      const sessions=(d.sessions||[]).map(s=>({...s,docs:Array.isArray(s.docs)?s.docs:[]}));
+      S={students:d.students||[],sessions,monthly:d.monthly||[],invoices:d.invoices||[]};
+    }catch(e){alert('Gagal memuat data: '+e.message);}
+    hideSpinner();
+  } else {
+    S={
+      students:lsGet('lm_s'),
+      sessions:(lsGet('lm_ses')).map(s=>({...s,docs:Array.isArray(s.docs)?s.docs:[]})),
+      monthly: lsGet('lm_mon'),
+      invoices:lsGet('lm_inv'),
+    };
+    if(!S.students.length)initSample();
+  }
+  renderStudents();
+})();
+</script>
+</body>
+</html>
