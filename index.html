@@ -150,6 +150,18 @@ main{max-width:780px;margin:0 auto;padding:1.5rem 1.25rem 5rem;}
 .doc-prev-item img{width:70px;height:70px;object-fit:cover;border-radius:8px;border:1.5px solid var(--border);}
 .doc-prev-rm{position:absolute;top:-5px;right:-5px;width:18px;height:18px;border-radius:50%;background:var(--P);color:#fff;border:none;cursor:pointer;font-size:10px;line-height:18px;text-align:center;padding:0;}
 
+/* ── Login (Guru) ── */
+.login-wrap{display:flex;justify-content:center;padding:.5rem 0;}
+.login-card{background:#fff;border:1.5px solid var(--border);border-radius:20px;padding:2rem;width:100%;max-width:360px;box-shadow:0 4px 24px rgba(200,85,85,.08);}
+.login-icon{font-size:46px;text-align:center;margin-bottom:1rem;}
+.login-title{font-size:20px;font-weight:800;text-align:center;margin-bottom:.4rem;}
+.login-sub{font-size:13px;color:var(--muted);text-align:center;margin-bottom:1.5rem;font-weight:500;line-height:1.5;}
+.btn-login{width:100%;padding:12px;border-radius:12px;border:none;background:var(--P);color:#fff;font-family:'Poppins',sans-serif;font-size:15px;font-weight:800;cursor:pointer;transition:background .15s;margin-top:.25rem;}
+.btn-login:hover{background:var(--Pd);}
+.login-err{display:none;background:var(--Pl);border:1.5px solid var(--M);border-radius:10px;padding:10px 14px;font-size:13px;font-weight:600;color:var(--Pd);margin-top:.75rem;}
+.logout-btn{padding:6px 12px;border-radius:8px;border:1.5px solid rgba(255,255,255,.4);background:rgba(255,255,255,.15);color:#fff;font-family:'Poppins',sans-serif;font-size:12px;font-weight:700;cursor:pointer;flex-shrink:0;}
+.logout-btn:hover{background:rgba(255,255,255,.28);}
+
 @media(max-width:520px){
   .student-grid{grid-template-columns:1fr;}
   .form-row{grid-template-columns:1fr;}
@@ -164,23 +176,47 @@ main{max-width:780px;margin:0 auto;padding:1.5rem 1.25rem 5rem;}
 <header>
   <div class="h-inner">
     <div class="h-logo"><img src="logo.png" alt="Bimbel Nala" onerror="this.style.display='none';this.parentNode.style.cssText+='display:flex;align-items:center;justify-content:center;font-size:26px';this.parentNode.textContent='📐'"></div>
-    <div>
+    <div style="flex:1">
       <div class="h-label">Dashboard Tutor</div>
       <h1>Bimbel <em>Nala</em></h1>
-      <p>Kelola siswa, sesi, dan laporan dengan mudah ✨</p>
+      <p id="header-sub">Masuk dengan PIN guru untuk melanjutkan ✨</p>
     </div>
+    <button class="logout-btn" id="logout-btn" style="display:none" onclick="logoutGuru()">Keluar</button>
   </div>
   <div class="h-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span><span class="d4"></span></div>
 </header>
 
-<div class="tab-bar">
+<div class="tab-bar" id="main-tab-bar" style="display:none">
   <button class="tab-btn active" onclick="showPage('siswa')">👤 Siswa</button>
   <button class="tab-btn"        onclick="showPage('jurnal')">📋 Jurnal</button>
   <button class="tab-btn"        onclick="showPage('progress')">📊 Progress</button>
   <button class="tab-btn"        onclick="showPage('tagihan')">💰 Tagihan</button>
+  <button class="tab-btn"        onclick="showPage('guru')">👩‍🏫 Guru</button>
 </div>
 
 <main>
+
+  <!-- ═══ LOGIN GURU ═══ -->
+  <div id="view-login" class="login-wrap" style="padding-top:1.5rem">
+    <div class="login-card">
+      <div class="login-icon">👩‍🏫</div>
+      <div class="login-title">Portal Guru</div>
+      <div class="login-sub">Masuk menggunakan username &amp; PIN yang sudah didaftarkan</div>
+      <div class="form-group">
+        <label>Username</label>
+        <input type="text" class="form-input" id="l-user" placeholder="mis. guru_nala" autocomplete="username" onkeydown="if(event.key==='Enter')doGuruLogin()">
+      </div>
+      <div class="form-group">
+        <label>PIN</label>
+        <input type="password" class="form-input" id="l-pin" placeholder="••••••" maxlength="6" autocomplete="current-password" onkeydown="if(event.key==='Enter')doGuruLogin()">
+      </div>
+      <button class="btn-login" onclick="doGuruLogin()">Masuk →</button>
+      <div class="login-err" id="login-err"></div>
+    </div>
+  </div>
+
+  <!-- ═══ DASHBOARD ═══ -->
+  <div id="view-dashboard" style="display:none">
 
   <!-- ═══ SISWA ═══ -->
   <div class="page active" id="page-siswa">
@@ -265,6 +301,22 @@ main{max-width:780px;margin:0 auto;padding:1.5rem 1.25rem 5rem;}
       <div id="invoice-list"></div>
     </div>
   </div>
+
+  <!-- ═══ GURU ═══ -->
+  <div class="page" id="page-guru">
+    <div class="section">
+      <div class="sec-head">
+        <div class="sec-head-left">
+          <div class="sec-icon si-red">👩‍🏫</div>
+          <div class="sec-title">Daftar Guru</div>
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="openGuruModal()">+ Tambah Guru</button>
+      </div>
+      <div id="guru-list" class="student-grid"></div>
+    </div>
+  </div>
+
+  </div><!-- end view-dashboard -->
 
 </main>
 
@@ -442,6 +494,34 @@ main{max-width:780px;margin:0 auto;padding:1.5rem 1.25rem 5rem;}
   </div>
 </div>
 
+<!-- ══ Modal: Guru ══ -->
+<div class="overlay hidden" id="modal-guru">
+  <div class="modal">
+    <div class="modal-title">
+      <span id="mgr-title">Tambah Guru</span>
+      <button class="modal-close" onclick="closeModal('modal-guru')">✕</button>
+    </div>
+    <input type="hidden" id="mgr-id">
+    <div class="form-group"><label>Nama Lengkap *</label><input type="text" class="form-input" id="mgr-name" placeholder="Nama guru" oninput="autoFillGuruUser()"></div>
+    <div class="form-group"><label>Username</label><input type="text" class="form-input" id="mgr-user" placeholder="mis. guru_nala"></div>
+    <div class="form-group">
+      <label>PIN (4–6 digit)</label>
+      <div style="display:flex;gap:8px;align-items:center">
+        <input type="text" class="form-input" id="mgr-pin" placeholder="mis. 1234" maxlength="6" style="flex:1">
+        <button type="button" class="btn btn-ghost btn-sm" onclick="generateGuruPin()" title="Generate PIN baru">🎲 Generate</button>
+        <button type="button" class="btn btn-ghost btn-sm" onclick="copyGuruPin()" title="Copy PIN">📋 Copy</button>
+      </div>
+      <div id="mgr-pin-copied" style="display:none;font-size:11px;color:var(--B);font-weight:700;margin-top:4px">✅ PIN berhasil di-copy!</div>
+    </div>
+    <div class="form-group"><label>Catatan <span style="font-weight:400;color:var(--muted)">— opsional</span></label><input type="text" class="form-input" id="mgr-note" placeholder="mis. Guru matematika"></div>
+    <div class="modal-footer">
+      <button class="btn btn-danger btn-sm" id="mgr-del-btn" onclick="deleteGuruFromModal()" style="margin-right:auto;display:none">🗑️ Hapus</button>
+      <button class="btn btn-ghost" onclick="closeModal('modal-guru')">Batal</button>
+      <button class="btn btn-primary" onclick="saveGuru()">Simpan</button>
+    </div>
+  </div>
+</div>
+
 <!-- ══ Global Spinner ══ -->
 <div id="global-spinner" style="display:none;position:fixed;inset:0;background:rgba(253,234,234,.85);z-index:9999;align-items:center;justify-content:center;flex-direction:column;gap:12px">
   <div style="width:44px;height:44px;border:4px solid var(--border);border-top-color:var(--P);border-radius:50%;animation:spin .7s linear infinite"></div>
@@ -492,11 +572,11 @@ const lsGet=k=>{try{return JSON.parse(localStorage.getItem(k)||'[]')}catch{retur
 const lsSet=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
 
 /* ── State ── */
-let S={students:[],sessions:[],monthly:[],invoices:[]};
-const DB={s:()=>S.students,ses:()=>S.sessions,mon:()=>S.monthly,inv:()=>S.invoices};
+let S={students:[],sessions:[],monthly:[],invoices:[],gurus:[]};
+const DB={s:()=>S.students,ses:()=>S.sessions,mon:()=>S.monthly,inv:()=>S.invoices,gurus:()=>S.gurus};
 
 function syncLocal(){
-  lsSet('lm_s',S.students);lsSet('lm_ses',S.sessions);lsSet('lm_mon',S.monthly);lsSet('lm_inv',S.invoices);
+  lsSet('lm_s',S.students);lsSet('lm_ses',S.sessions);lsSet('lm_mon',S.monthly);lsSet('lm_inv',S.invoices);lsSet('lm_guru',S.gurus||[]);
 }
 
 /* ── Spinner ── */
@@ -588,7 +668,7 @@ function initSample(){
 }
 
 /* ── Navigation ── */
-const PAGES=['siswa','jurnal','progress','tagihan'];
+const PAGES=['siswa','jurnal','progress','tagihan','guru'];
 function showPage(name){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
@@ -597,6 +677,7 @@ function showPage(name){
   if(name==='jurnal')   {fillStudentFilter('f-ses-student');fillMonthFilter();renderSessions();renderSessionSummary();}
   if(name==='progress') {fillStudentFilter('f-mon-student');fillMonthlyFilter();renderMonthly();}
   if(name==='tagihan')  {fillStudentFilter('f-inv-student');renderInvoices();renderInvoiceSummary();}
+  if(name==='guru')     {renderGurus();}
 }
 
 /* ── Modals ── */
@@ -998,26 +1079,216 @@ async function deleteInvoice(id){
   renderInvoices();renderInvoiceSummary();
 }
 
-/* ── Init ── */
-(async function(){
+/* ════ LOGIN / AUTH ════ */
+async function doGuruLogin(){
+  const u=document.getElementById('l-user').value.trim().toLowerCase();
+  const p=document.getElementById('l-pin').value.trim();
+  const err=document.getElementById('login-err');
+  err.style.display='none';
+  if(!u||!p){err.textContent='Username dan PIN wajib diisi.';err.style.display='block';return;}
+
   if(API_URL){
     showSpinner();
     try{
-      const d=await apiFetch('get_admin');
-      const sessions=(d.sessions||[]).map(s=>({...s,docs:Array.isArray(s.docs)?s.docs:[]}));
-      S={students:d.students||[],sessions,monthly:d.monthly||[],invoices:d.invoices||[]};
-    }catch(e){alert('Gagal memuat data: '+e.message);}
-    hideSpinner();
+      const data=await apiFetch('get_guru',{username:u,pin:p});
+      hideSpinner();
+      if(data.error){err.textContent=data.error;err.style.display='block';document.getElementById('l-pin').value='';return;}
+      // Muat data dari server dan tampilkan dashboard
+      const sessions=(data.sessions||[]).map(s=>({...s,docs:Array.isArray(s.docs)?s.docs:[]}));
+      S={students:data.students||[],sessions,monthly:data.monthly||[],invoices:data.invoices||[],gurus:lsGet('lm_guru')};
+      localStorage.setItem('lm_guru_session',JSON.stringify({username:u,pin:p}));
+      _showDashboard(data.guru);
+    }catch(e){hideSpinner();err.textContent='Gagal terhubung ke server. Coba lagi.';err.style.display='block';}
   } else {
+    // Fallback localStorage
+    const gurus=lsGet('lm_guru');
+    const guru=gurus.find(g=>g.username.toLowerCase()===u&&g.pin===p);
+    if(!guru){err.textContent='Username atau PIN salah.';err.style.display='block';document.getElementById('l-pin').value='';return;}
+    localStorage.setItem('lm_guru_session',JSON.stringify({username:u,pin:p}));
+    _showDashboard(guru);
+  }
+}
+
+function _showDashboard(guru){
+  document.getElementById('view-login').style.display='none';
+  document.getElementById('view-dashboard').style.display='block';
+  document.getElementById('main-tab-bar').style.display='flex';
+  document.getElementById('logout-btn').style.display='block';
+  document.getElementById('header-sub').textContent=`Halo, ${guru.name||'Guru'} 👋 — Kelola siswa dengan mudah ✨`;
+  renderStudents();
+}
+
+function logoutGuru(){
+  localStorage.removeItem('lm_guru_session');
+  document.getElementById('view-login').style.display='flex';
+  document.getElementById('view-dashboard').style.display='none';
+  document.getElementById('main-tab-bar').style.display='none';
+  document.getElementById('logout-btn').style.display='none';
+  document.getElementById('header-sub').textContent='Masuk dengan PIN guru untuk melanjutkan ✨';
+  document.getElementById('l-user').value='';
+  document.getElementById('l-pin').value='';
+  document.getElementById('login-err').style.display='none';
+}
+
+/* ════ GURU ════ */
+const genGuruUser=n=>'guru_'+(n||'guru').toLowerCase().replace(/\s+/g,'').slice(0,10);
+const genGuruPin=()=>String(Math.floor(100000+Math.random()*900000)).slice(0,6);
+
+function renderGurus(){
+  const list=document.getElementById('guru-list');
+  const arr=S.gurus||[];
+  if(!arr.length){list.innerHTML='<div class="empty"><div class="ei">👩‍🏫</div><p>Belum ada guru terdaftar</p></div>';return;}
+  list.innerHTML=arr.map(g=>`
+    <div class="student-card" onclick="openGuruModal('${g.id}')">
+      <div class="sc-top">
+        <div class="sc-avatar" style="background:linear-gradient(135deg,var(--Al),#FDE);color:var(--Ad)">${ini(g.name)}</div>
+        <div><div class="sc-name">${esc(g.name)}</div><div class="sc-sub">${esc(g.note||'Guru')}</div></div>
+      </div>
+      <div class="cred-box" style="background:var(--Al);border-color:var(--A);color:var(--Ad)">
+        🔑 Username: <strong>${esc(g.username)}</strong> &nbsp;|&nbsp; PIN: <strong>${esc(g.pin)}</strong>
+      </div>
+    </div>`).join('');
+}
+
+function autoFillGuruUser(){
+  const nameEl=document.getElementById('mgr-name');
+  const userEl=document.getElementById('mgr-user');
+  // Only auto-fill if field is empty or was auto-generated
+  if(!userEl._edited)userEl.value=genGuruUser(nameEl.value);
+}
+
+function openGuruModal(id=''){
+  const g=id?((S.gurus||[]).find(x=>x.id===id)):null;
+  document.getElementById('mgr-title').textContent=g?'Edit Guru':'Tambah Guru';
+  document.getElementById('mgr-id').value   =g?.id   ||'';
+  document.getElementById('mgr-name').value =g?.name ||'';
+  document.getElementById('mgr-user').value =g?.username||'';
+  document.getElementById('mgr-pin').value  =g?.pin  ||(g?'':genGuruPin());
+  document.getElementById('mgr-note').value =g?.note ||'';
+  document.getElementById('mgr-pin-copied').style.display='none';
+  document.getElementById('mgr-del-btn').style.display=g?'inline-flex':'none';
+  // Track if user manually edited the username field
+  const userEl=document.getElementById('mgr-user');
+  userEl._edited=!!g;
+  userEl.addEventListener('input',()=>{userEl._edited=true;},{once:true});
+  openModal('modal-guru');
+}
+
+function generateGuruPin(){
+  document.getElementById('mgr-pin').value=genGuruPin();
+  document.getElementById('mgr-pin-copied').style.display='none';
+}
+
+function copyGuruPin(){
+  const pin=document.getElementById('mgr-pin').value;
+  if(!pin){alert('PIN belum diisi!');return;}
+  navigator.clipboard.writeText(pin).then(()=>{
+    const el=document.getElementById('mgr-pin-copied');
+    el.style.display='block';
+    setTimeout(()=>el.style.display='none',2500);
+  }).catch(()=>{
+    // Fallback
+    const ta=document.createElement('textarea');
+    ta.value=pin;ta.style.position='fixed';ta.style.opacity='0';
+    document.body.appendChild(ta);ta.select();document.execCommand('copy');
+    document.body.removeChild(ta);
+    const el=document.getElementById('mgr-pin-copied');
+    el.style.display='block';
+    setTimeout(()=>el.style.display='none',2500);
+  });
+}
+
+async function saveGuru(){
+  const name=document.getElementById('mgr-name').value.trim();
+  if(!name){alert('Nama guru wajib diisi!');return;}
+  const id=document.getElementById('mgr-id').value;
+  const pin=document.getElementById('mgr-pin').value.trim()||genGuruPin();
+  const data={
+    id,name,
+    username:document.getElementById('mgr-user').value.trim()||genGuruUser(name),
+    pin,
+    note:document.getElementById('mgr-note').value.trim(),
+  };
+  if(API_URL){
+    showSpinner();
+    const res=await apiPost('save_guru',data);
+    hideSpinner();
+    if(res.error){alert('Gagal menyimpan: '+res.error);return;}
+    data.id=res.id;
+  }
+  if(!S.gurus)S.gurus=[];
+  if(id){const i=S.gurus.findIndex(x=>x.id===id);if(i>=0)S.gurus[i]={...S.gurus[i],...data};}
+  else S.gurus.push({...data,id:data.id||uid()});
+  closeModal('modal-guru');
+  renderGurus();
+}
+
+function deleteGuruFromModal(){
+  const id=document.getElementById('mgr-id').value;
+  if(!id||!confirm('Hapus guru ini?'))return;
+  _doDeleteGuru(id);
+}
+
+async function _doDeleteGuru(id){
+  if(API_URL){showSpinner();await apiPost('delete_guru',{id});hideSpinner();}
+  S.gurus=(S.gurus||[]).filter(g=>g.id!==id);
+  closeModal('modal-guru');
+  renderGurus();
+}
+
+/* ── Init ── */
+(async function(){
+  // Cek sesi tersimpan (auto-login)
+  const stored=localStorage.getItem('lm_guru_session');
+  if(stored){
+    try{
+      const {username,pin}=JSON.parse(stored);
+      if(API_URL){
+        showSpinner();
+        try{
+          const data=await apiFetch('get_guru',{username,pin});
+          hideSpinner();
+          if(!data.error){
+            const sessions=(data.sessions||[]).map(s=>({...s,docs:Array.isArray(s.docs)?s.docs:[]}));
+            S={students:data.students||[],sessions,monthly:data.monthly||[],invoices:data.invoices||[],gurus:lsGet('lm_guru')};
+            _showDashboard(data.guru);
+            return;
+          }
+        }catch(e){hideSpinner();}
+        // Kalau gagal, kembali ke login
+        localStorage.removeItem('lm_guru_session');
+      } else {
+        // localStorage mode
+        const gurus=lsGet('lm_guru');
+        const guru=gurus.find(g=>g.username.toLowerCase()===username.toLowerCase()&&g.pin===pin);
+        if(guru){
+          S={
+            students:lsGet('lm_s'),
+            sessions:(lsGet('lm_ses')).map(s=>({...s,docs:Array.isArray(s.docs)?s.docs:[]})),
+            monthly: lsGet('lm_mon'),
+            invoices:lsGet('lm_inv'),
+            gurus,
+          };
+          if(!S.students.length)initSample();
+          _showDashboard(guru);
+          return;
+        }
+        localStorage.removeItem('lm_guru_session');
+      }
+    }catch(e){localStorage.removeItem('lm_guru_session');}
+  }
+  // Tidak ada sesi tersimpan — tampilkan login
+  // Tetap preload data dummy di localStorage mode agar siap saat login
+  if(!API_URL){
     S={
       students:lsGet('lm_s'),
       sessions:(lsGet('lm_ses')).map(s=>({...s,docs:Array.isArray(s.docs)?s.docs:[]})),
       monthly: lsGet('lm_mon'),
       invoices:lsGet('lm_inv'),
+      gurus:   lsGet('lm_guru'),
     };
     if(!S.students.length)initSample();
   }
-  renderStudents();
 })();
 </script>
 </body>
