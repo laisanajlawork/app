@@ -212,6 +212,13 @@ main{max-width:780px;margin:0 auto;padding:1.5rem 1.25rem 5rem;}
       </div>
       <button class="btn-login" onclick="doGuruLogin()">Masuk →</button>
       <div class="login-err" id="login-err"></div>
+      <div style="text-align:center;margin-top:1rem">
+        <button type="button" onclick="toggleAdminMode()" style="background:none;border:none;font-size:12px;color:var(--muted);cursor:pointer;font-family:'Poppins',sans-serif;font-weight:600;text-decoration:underline">🔐 Login sebagai Admin</button>
+      </div>
+      <div id="admin-mode-box" style="display:none;margin-top:.75rem;padding:.75rem;background:var(--Al);border:1.5px solid var(--A);border-radius:10px">
+        <div style="font-size:11.5px;font-weight:700;color:var(--Ad);margin-bottom:.5rem">🔑 Password Admin</div>
+        <input type="password" class="form-input" id="l-adminpass" placeholder="Password admin" onkeydown="if(event.key==='Enter')doGuruLogin()">
+      </div>
     </div>
   </div>
 
@@ -1083,11 +1090,46 @@ async function deleteInvoice(id){
 }
 
 /* ════ LOGIN / AUTH ════ */
+const ADMIN_PASS = 'nala2025'; // ganti sesuai kebutuhan
+
+let _adminMode = false;
+function toggleAdminMode(){
+  _adminMode=!_adminMode;
+  document.getElementById('admin-mode-box').style.display=_adminMode?'block':'none';
+}
+
 async function doGuruLogin(){
-  const u=document.getElementById('l-user').value.trim().toLowerCase();
-  const p=document.getElementById('l-pin').value.trim();
   const err=document.getElementById('login-err');
   err.style.display='none';
+
+  // ── Mode Admin (bypass lewat password hardcoded) ──
+  if(_adminMode){
+    const pass=document.getElementById('l-adminpass').value.trim();
+    if(!pass){err.textContent='Password admin wajib diisi.';err.style.display='block';return;}
+    if(pass!==ADMIN_PASS){err.textContent='Password admin salah.';err.style.display='block';document.getElementById('l-adminpass').value='';return;}
+    if(API_URL){
+      showSpinner();
+      try{
+        const d=await apiFetch('get_admin');
+        hideSpinner();
+        if(d.error){err.textContent=d.error;err.style.display='block';return;}
+        const sessions=(d.sessions||[]).map(s=>({...s,docs:Array.isArray(s.docs)?s.docs:[]}));
+        S={students:d.students||[],sessions,monthly:d.monthly||[],invoices:d.invoices||[],gurus:d.gurus||[]};
+        localStorage.setItem('lm_guru_session',JSON.stringify({_admin:true,pass}));
+        _showDashboard({name:'Admin'});
+      }catch(e){hideSpinner();err.textContent='Gagal terhubung ke server.';err.style.display='block';}
+    } else {
+      S={students:lsGet('lm_s'),sessions:(lsGet('lm_ses')).map(s=>({...s,docs:Array.isArray(s.docs)?s.docs:[]})),monthly:lsGet('lm_mon'),invoices:lsGet('lm_inv'),gurus:lsGet('lm_guru')};
+      if(!S.students.length)initSample();
+      localStorage.setItem('lm_guru_session',JSON.stringify({_admin:true,pass}));
+      _showDashboard({name:'Admin'});
+    }
+    return;
+  }
+
+  // ── Mode Guru (PIN dari sheet Guru) ──
+  const u=document.getElementById('l-user').value.trim().toLowerCase();
+  const p=document.getElementById('l-pin').value.trim();
   if(!u||!p){err.textContent='Username dan PIN wajib diisi.';err.style.display='block';return;}
 
   if(API_URL){
@@ -1096,14 +1138,12 @@ async function doGuruLogin(){
       const data=await apiFetch('get_guru',{username:u,pin:p});
       hideSpinner();
       if(data.error){err.textContent=data.error;err.style.display='block';document.getElementById('l-pin').value='';return;}
-      // Muat data dari server dan tampilkan dashboard
       const sessions=(data.sessions||[]).map(s=>({...s,docs:Array.isArray(s.docs)?s.docs:[]}));
-      S={students:data.students||[],sessions,monthly:data.monthly||[],invoices:data.invoices||[],gurus:lsGet('lm_guru')};
+      S={students:data.students||[],sessions,monthly:data.monthly||[],invoices:data.invoices||[],gurus:data.gurus||[]};
       localStorage.setItem('lm_guru_session',JSON.stringify({username:u,pin:p}));
       _showDashboard(data.guru);
     }catch(e){hideSpinner();err.textContent='Gagal terhubung ke server. Coba lagi.';err.style.display='block';}
   } else {
-    // Fallback localStorage
     const gurus=lsGet('lm_guru');
     const guru=gurus.find(g=>g.username.toLowerCase()===u&&g.pin===p);
     if(!guru){err.textContent='Username atau PIN salah.';err.style.display='block';document.getElementById('l-pin').value='';return;}
@@ -1241,55 +1281,58 @@ async function _doDeleteGuru(id){
 
 /* ── Init ── */
 (async function(){
-  // Cek sesi tersimpan (auto-login)
   const stored=localStorage.getItem('lm_guru_session');
   if(stored){
     try{
-      const {username,pin}=JSON.parse(stored);
-      if(API_URL){
-        showSpinner();
-        try{
-          const data=await apiFetch('get_guru',{username,pin});
-          hideSpinner();
-          if(!data.error){
-            const sessions=(data.sessions||[]).map(s=>({...s,docs:Array.isArray(s.docs)?s.docs:[]}));
-            S={students:data.students||[],sessions,monthly:data.monthly||[],invoices:data.invoices||[],gurus:lsGet('lm_guru')};
-            _showDashboard(data.guru);
-            return;
-          }
-        }catch(e){hideSpinner();}
-        // Kalau gagal, kembali ke login
-        localStorage.removeItem('lm_guru_session');
-      } else {
-        // localStorage mode
-        const gurus=lsGet('lm_guru');
-        const guru=gurus.find(g=>g.username.toLowerCase()===username.toLowerCase()&&g.pin===pin);
-        if(guru){
-          S={
-            students:lsGet('lm_s'),
-            sessions:(lsGet('lm_ses')).map(s=>({...s,docs:Array.isArray(s.docs)?s.docs:[]})),
-            monthly: lsGet('lm_mon'),
-            invoices:lsGet('lm_inv'),
-            gurus,
-          };
+      const sess=JSON.parse(stored);
+      // Admin session
+      if(sess._admin&&sess.pass===ADMIN_PASS){
+        if(API_URL){
+          showSpinner();
+          try{
+            const d=await apiFetch('get_admin');hideSpinner();
+            if(!d.error){
+              const sessions=(d.sessions||[]).map(s=>({...s,docs:Array.isArray(s.docs)?s.docs:[]}));
+              S={students:d.students||[],sessions,monthly:d.monthly||[],invoices:d.invoices||[],gurus:d.gurus||[]};
+              _showDashboard({name:'Admin'});return;
+            }
+          }catch(e){hideSpinner();}
+        } else {
+          S={students:lsGet('lm_s'),sessions:(lsGet('lm_ses')).map(s=>({...s,docs:Array.isArray(s.docs)?s.docs:[]})),monthly:lsGet('lm_mon'),invoices:lsGet('lm_inv'),gurus:lsGet('lm_guru')};
           if(!S.students.length)initSample();
-          _showDashboard(guru);
-          return;
+          _showDashboard({name:'Admin'});return;
         }
         localStorage.removeItem('lm_guru_session');
       }
+      // Guru session
+      const {username,pin}=sess;
+      if(username&&pin){
+        if(API_URL){
+          showSpinner();
+          try{
+            const data=await apiFetch('get_guru',{username,pin});hideSpinner();
+            if(!data.error){
+              const sessions=(data.sessions||[]).map(s=>({...s,docs:Array.isArray(s.docs)?s.docs:[]}));
+              S={students:data.students||[],sessions,monthly:data.monthly||[],invoices:data.invoices||[],gurus:data.gurus||[]};
+              _showDashboard(data.guru);return;
+            }
+          }catch(e){hideSpinner();}
+          localStorage.removeItem('lm_guru_session');
+        } else {
+          const gurus=lsGet('lm_guru');
+          const guru=gurus.find(g=>g.username.toLowerCase()===username.toLowerCase()&&g.pin===pin);
+          if(guru){
+            S={students:lsGet('lm_s'),sessions:(lsGet('lm_ses')).map(s=>({...s,docs:Array.isArray(s.docs)?s.docs:[]})),monthly:lsGet('lm_mon'),invoices:lsGet('lm_inv'),gurus};
+            if(!S.students.length)initSample();
+            _showDashboard(guru);return;
+          }
+          localStorage.removeItem('lm_guru_session');
+        }
+      }
     }catch(e){localStorage.removeItem('lm_guru_session');}
   }
-  // Tidak ada sesi tersimpan — tampilkan login
-  // Tetap preload data dummy di localStorage mode agar siap saat login
   if(!API_URL){
-    S={
-      students:lsGet('lm_s'),
-      sessions:(lsGet('lm_ses')).map(s=>({...s,docs:Array.isArray(s.docs)?s.docs:[]})),
-      monthly: lsGet('lm_mon'),
-      invoices:lsGet('lm_inv'),
-      gurus:   lsGet('lm_guru'),
-    };
+    S={students:lsGet('lm_s'),sessions:(lsGet('lm_ses')).map(s=>({...s,docs:Array.isArray(s.docs)?s.docs:[]})),monthly:lsGet('lm_mon'),invoices:lsGet('lm_inv'),gurus:lsGet('lm_guru')};
     if(!S.students.length)initSample();
   }
 })();
